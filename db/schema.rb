@@ -10,7 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_17_030350) do
+ActiveRecord::Schema.define(version: 2021_02_17_192246) do
+
+  create_table "alarms", force: :cascade do |t|
+    t.string "label"
+    t.string "time"
+    t.boolean "sende_email"
+    t.boolean "delete_after_goes_off"
+    t.boolean "repeat_days", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "stopwatches", force: :cascade do |t|
+    t.string "label"
+    t.string "time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "timezones", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

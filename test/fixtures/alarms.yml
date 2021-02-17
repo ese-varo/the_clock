@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  label: MyString
+  time: MyString
+  sende_email: false
+  delete_after_goes_off: false
+  repeat_days: false
+
+two:
+  label: MyString
+  time: MyString
+  sende_email: false
+  delete_after_goes_off: false
+  repeat_days: false
