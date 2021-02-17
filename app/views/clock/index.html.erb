@@ -1,8 +1,22 @@
-<h1>Clock#index</h1>
-<p>Find me in app/views/clock/index.html.erb</p>
-
-
+<section>
+  <article>
+    <h2>Your current tiemzone</h2>
+    <%= render 'shared/timezone', timezone: @current_timezone %>
+    <p><%= link_to 'See all available timezones', all_timezones_path(current_user) %></p>
+  </article>
+  <article>
+    <h2>Stopwatch</h2>
+    <% if user_signed_in? %>
+      <p><%= link_to 'My stopwatch records', user_stopwatches_path(current_user) %></p>
+    <% end %>
+  </article>
+</section>
 <% if user_signed_in? %>
+  <article>
+    <h2>Set new Alarm</h2>
+    <p><%= link_to 'My alarms', user_alarms_path(current_user) %></p>
+  </article>
+  </br>
   <p><%= link_to 'Sign out', destroy_user_session_path, method: :delete %></p>
   <p><%= link_to 'Edit my account', edit_user_registration_path %></p>
 <% else %>
