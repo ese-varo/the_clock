@@ -23,6 +23,6 @@ class ClockController < ApplicationController
 
   private 
   def timezone_params
-    params.permit(:name)
+    params.permit(:name, :user_id)
   end
 end
