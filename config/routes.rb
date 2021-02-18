@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :clock, except: [:index]
     resources :stopwatches
     resources :alarms
+    resources :timezones, only: [:destroy]
   end
 
   root to: 'clock#index'
