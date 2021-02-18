@@ -9,11 +9,10 @@ Rails.application.routes.draw do
     resources :clock, except: [:index]
     resources :stopwatches
     resources :alarms
-    resources :timezones, only: [:destroy]
   end
 
   root to: 'clock#index'
   get 'all_timezones',      to: 'clock#timezones'
   get 'stopwatch',          to: 'clock#stopwatch'
-  get 'favorite_timezones', to: 'timezones#index'
+  get 'favorites_timezones', to: 'clock#favorites'
 end

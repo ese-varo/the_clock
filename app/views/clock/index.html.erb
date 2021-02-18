@@ -3,7 +3,9 @@
     <h2>Your current tiemzone</h2>
     <%= render 'shared/timezone', timezone: @current_timezone %>
     <p><%= link_to 'See all available timezones', all_timezones_path(current_user) %></p>
-    <p><%= link_to 'See all favorite timezones', favorite_timezones_path(current_user) %></p>
+    <% if user_signed_in? %>
+      <p><%= link_to 'See all favorite timezones', favorites_timezones_path(current_user) %></p>
+    <% end %>
   </article>
   <article>
     <h2>Stopwatch</h2>

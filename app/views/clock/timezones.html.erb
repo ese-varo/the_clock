@@ -1,7 +1,9 @@
 <% @timezones.each do |timezone| %>
   <%= render 'shared/timezone', timezone: timezone %>  
-  <%= button_to 'Save as favorite', user_clock_index_path(current_user), method: :post, params: { name: timezone.name} %>
-
+  
+  <% if user_signed_in? %>
+    <%= button_to 'Save as favorite', user_clock_index_path(current_user), method: :post, params: { name: timezone.name} %>
+  <% end %>
   </rb>
 <% end %>
 

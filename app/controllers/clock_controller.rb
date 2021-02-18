@@ -7,6 +7,10 @@ class ClockController < ApplicationController
     @timezones = ActiveSupport::TimeZone.all
   end
 
+  def favorites
+    @user_timezones = Timezone.where(user_id: current_user.id) 
+  end
+
   def new
     @timezone = Timezone.new
   end
@@ -19,6 +23,12 @@ class ClockController < ApplicationController
     else
       render :new
     end
+  end
+
+  def destroy
+    @timezone = Timezone.find(params[:id])
+    @timezone.destroy
+    redirect_to root_path
   end
 
   private 
