@@ -1,0 +1,15 @@
+<h1>Stopwatch</h1>
+<h3><span id="minutes"><%= sprintf("%.2d", @minutes) %></span>:<span id="seconds"><%= sprintf("%.2d", @seconds) %></span></h3>
+<button id="start"> Start </button>
+<button id="stop"> Stop </button>
+<button id="reset"> Reset </button>
+<button id="pause"> Pause </button>
+<button id="record"> Save time </button>
+<div>
+  <p>Records</p>
+  <ul id="records">
+    
+  </ul>
+</div>
+
+<%= javascript_pack_tag 'stopwatch' %>

@@ -10,6 +10,7 @@
   <article>
     <h2>Stopwatch</h2>
     <% if user_signed_in? %>
+      <p><%= link_to 'New stopwatch', new_user_stopwatch_path(current_user) %></p>
       <p><%= link_to 'My stopwatch records', user_stopwatches_path(current_user) %></p>
     <% end %>
   </article>
