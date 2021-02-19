@@ -1,16 +1,18 @@
+import Rails from "@rails/ujs"
 const startBtn = document.getElementById("start");
 const stopBtn = document.getElementById("stop");
 const resetBtn = document.getElementById("reset");
-const recordsBtn = document.getElementById("record");
+const recordBtn = document.getElementById("record");
 const pauseBtn = document.getElementById("pause");
 const minutesLabel = document.getElementById("minutes");
 const secondsLabel = document.getElementById("seconds");
 const listRecords = document.getElementById("records");
+const labelInput = document.querySelector('input[name="label"]');
+const userId = recordBtn.dataset.userId;
 let startTime;
 let updatedTime;
 let interval;
 let difference;
-let records = [];
 let recordCounter = 1;
 let savedTime;
 let paused = false;
@@ -64,11 +66,26 @@ pauseBtn.addEventListener('click', () => {
         }
 });
 
-recordsBtn.addEventListener('click', () => {
-        // records.push({minutes: minutesLabel.textContent, seconds: secondsLabel.textContent, timestap: new Date().getTime()});
-        let li = document.createElement("li");
-        li.innerText = `${recordCounter++}. Time: ${minutesLabel.textContent}:${secondsLabel.textContent}`;
-        listRecords.appendChild(li); 
+recordBtn.addEventListener('click', () => {
+        console.log(labelInput.value);
+        if(!labelInput.value) {
+                alert("Label is empty");
+        } else {
+                let li = document.createElement("li");
+                li.innerText = `${recordCounter++}. Time: ${minutesLabel.textContent}:${secondsLabel.textContent}`;
+                listRecords.appendChild(li);
+                fetch(`/users/${userId}/stopwatches`, {
+                        method: 'post',
+                        body: JSON.stringify({label: labelInput.value, time: difference, user_id: userId}),
+                        headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': Rails.csrfToken()
+                        },
+                        credentials: 'same-origin'
+                }).then( (response) => {
+                        console.log(response.json());
+                });
+        }
 });
 
 function showTime() {

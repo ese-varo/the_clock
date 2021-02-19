@@ -1,10 +1,12 @@
 <h1>Stopwatch</h1>
-<h3><span id="minutes"><%= sprintf("%.2d", @minutes) %></span>:<span id="seconds"><%= sprintf("%.2d", @seconds) %></span></h3>
+<label for="label">Label: </label>
+<input type="text" id="label" name="label">
+<h3><span id="minutes">00</span>:<span id="seconds">00</span></h3>
 <button id="start"> Start </button>
 <button id="stop"> Stop </button>
 <button id="reset"> Reset </button>
 <button id="pause"> Pause </button>
-<button id="record"> Save time </button>
+<button id="record" data-user-id="<%= current_user.id %>"> Save time </button>
 <div>
   <p>Records</p>
   <ul id="records">
