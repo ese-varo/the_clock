@@ -48,6 +48,7 @@ resetBtn.addEventListener('click', () => {
         paused = false;
         running = false;
         recordCounter = 1;
+        labelInput.value = "";
         while (listRecords.firstChild) {
                 listRecords.removeChild(listRecords.lastChild);
         }
