@@ -1,0 +1,15 @@
+<%= form_with model: [@user, @alarm]  do |form| %>
+  <div>
+    <%= form.label :label %><br>
+    <%= form.text_field :label %>
+  </div>
+
+  <div>
+    <%= form.label :time %><br>
+    <%= form.time_field :time %>
+  </div>
+  
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

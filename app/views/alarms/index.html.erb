@@ -6,6 +6,7 @@
   <li>
     <%= index + 1  %>. <%= alarm.label %> - <%= alarm.time %> </li>
   </li>
+    <%= button_to 'Update alarm', edit_user_alarm_path(current_user, alarm), method: :get %>
     <%= button_to 'Remove alarm', user_alarm_path(current_user, alarm), method: :delete %>
   <% end %>
 </ul>

@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_19_204639) do
+ActiveRecord::Schema.define(version: 2021_02_22_054314) do
 
   create_table "alarms", force: :cascade do |t|
     t.string "label"
-    t.string "time"
     t.boolean "sende_email"
     t.boolean "delete_after_goes_off"
     t.boolean "repeat_days", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id", null: false
+    t.time "time"
     t.index ["user_id"], name: "index_alarms_on_user_id"
   end
 
