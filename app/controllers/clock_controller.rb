@@ -16,7 +16,6 @@ class ClockController < ApplicationController
   end
 
   def create
-    puts params
     @timezone = Timezone.new(timezone_params)
     if @timezone.save
       flash[:success] = "Timezone save as favorite"
