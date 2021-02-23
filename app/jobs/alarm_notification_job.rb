@@ -4,6 +4,5 @@ class AlarmNotificationJob < ApplicationJob
 
   def perform(*args)
     AlarmMailer.with(user: args[0], alarm: args[1]).alert_alarm_email.deliver_later
-    puts "La alarma esta sonando"
   end
 end

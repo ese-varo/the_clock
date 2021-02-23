@@ -6,4 +6,9 @@ class AlarmMailer < ApplicationMailer
     @alarm = params[:alarm]
     mail(to: @user.email, subject: 'A new alarm registered')
   end
+  
+  def summary_email
+    @user = params[:user]
+    mail(to: @user.email, subject: 'This is the summary of the day')
+  end
 end
