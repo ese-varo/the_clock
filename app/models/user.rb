@@ -6,4 +6,6 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   has_many :timezones
+  has_many :stopwatches
+  has_many :alarms
 end

@@ -77,7 +77,7 @@ recordBtn.addEventListener('click', () => {
                 listRecords.appendChild(li);
                 fetch(`/users/${userId}/stopwatches`, {
                         method: 'post',
-                        body: JSON.stringify({label: labelInput.value, time: difference, user_id: userId}),
+                        body: JSON.stringify({label: labelInput.value, time: difference}),
                         headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-Token': Rails.csrfToken()

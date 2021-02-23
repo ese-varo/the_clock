@@ -8,7 +8,7 @@ class ClockController < ApplicationController
   end
 
   def favorites
-    @user_timezones = Timezone.where(user_id: current_user.id) 
+    @user_timezones = current_user.timezones
   end
 
   def new
@@ -16,7 +16,7 @@ class ClockController < ApplicationController
   end
 
   def create
-    @timezone = Timezone.new(timezone_params)
+    @timezone = current_user.timezones.new(timezone_params)
     if @timezone.save
       flash[:success] = "Timezone save as favorite"
     else
@@ -25,7 +25,7 @@ class ClockController < ApplicationController
   end
 
   def destroy
-    @timezone = Timezone.find(params[:id])
+    @timezone = current_user.timezones.find(params[:id])
     @timezone.destroy
     redirect_to root_path
   end

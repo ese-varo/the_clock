@@ -1,8 +1,6 @@
 class AlarmsController < ApplicationController
-  
-  
   def index
-    @alarms = Alarm.where(user_id: current_user.id)
+    @alarms = current_user.alarms 
   end
 
   def new
@@ -11,8 +9,8 @@ class AlarmsController < ApplicationController
   end
 
   def create
-    @alarm = Alarm.new(alarm_params)
-    if @alarm.save
+    @alarm = current_user.alarms.create(alarm_params)
+    if @alarm
       AlarmNotificationJob.set(wait_until: @alarm[:time]).perform_later(current_user, @alarm)
       redirect_to user_alarms_path(current_user)
     else
@@ -21,12 +19,12 @@ class AlarmsController < ApplicationController
   end
 
   def edit 
-    @alarm = Alarm.find(params[:id]) 
+    @alarm = current_user.alarms.find(params[:id])
     @user = current_user
   end
 
   def update
-    @alarm = Alarm.find(params[:id])
+    @alarm = current_user.alarms.find(params[:id])
 
     if @alarm.update(alarm_params)
       redirect_to user_alarms_path(current_user)
@@ -36,7 +34,7 @@ class AlarmsController < ApplicationController
   end
 
   def destroy
-    @alarm = Alarm.find(params[:id])
+    @alarm = current_user.alarms.find(params[:id])
     if @alarm.destroy
       redirect_to user_alarms_path(current_user)
     else 
@@ -46,8 +44,6 @@ class AlarmsController < ApplicationController
   
   private
   def alarm_params
-    form_params = params.require(:alarm).permit!
-    form_params[:user_id] = params[:user_id]
-    form_params
+    params.require(:alarm).permit!
   end
 end

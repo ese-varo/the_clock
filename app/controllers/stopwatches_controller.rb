@@ -1,7 +1,7 @@
 class StopwatchesController < ApplicationController
   
   def index
-    @stopwatches = Stopwatch.where(user_id: current_user.id)
+    @stopwatches = current_user.stopwatches
   end
 
   def new
@@ -9,8 +9,8 @@ class StopwatchesController < ApplicationController
   end
 
   def create
-    @stopwatch = Stopwatch.new(stopwatch_params)
-    if @stopwatch.save
+    @stopwatch = current_user.stopwatches.create(stopwatch_params)
+    if @stopwatch
       flash[:success]="Record of stopwatch saved"
     else 
       render :new
@@ -18,13 +18,13 @@ class StopwatchesController < ApplicationController
   end
 
   def destroy
-    @stopwatch = Stopwatch.find(params[:id])
+    @stopwatch = current_user.stopwatches.find(params[:id])
     @stopwatch.destroy
     redirect_to root_path
   end
 
   private
   def stopwatch_params
-    params.require(:stopwatch).permit(:label, :time, :user_id)
+    params.require(:stopwatch).permit!
   end
 end
