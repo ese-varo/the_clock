@@ -1,4 +1,7 @@
 <h1>Alarms</h1>
+<% if flash[:notification] %>
+  <p>Tu alarma esta sonando</p>
+<% end %>
 <%= link_to "New Alarm", new_user_alarm_path %>
 <h3>All my alarms</h3>
 <ul>

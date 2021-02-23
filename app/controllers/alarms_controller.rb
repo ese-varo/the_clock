@@ -1,4 +1,6 @@
 class AlarmsController < ApplicationController
+  
+  
   def index
     @alarms = Alarm.where(user_id: current_user.id)
   end
@@ -6,13 +8,12 @@ class AlarmsController < ApplicationController
   def new
     @alarm = Alarm.new
     @user = current_user
-    name_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    @days = name_days.each_with_index.map { |name, index| Day.new(index, name) }
   end
 
   def create
-    @alarm = Alarm.new(alarm_params.merge({user_id: params[:user_id]}))
+    @alarm = Alarm.new(alarm_params)
     if @alarm.save
+      AlarmNotificationJob.set(wait_until: @alarm[:time]).perform_later(current_user, @alarm)
       redirect_to user_alarms_path(current_user)
     else
       render :new
@@ -42,24 +43,11 @@ class AlarmsController < ApplicationController
       render :new
     end
   end
-
-  class Day
-    def initialize(id, name)
-      @id = id
-      @name = name
-    end
-
-    def id
-      @id
-    end
-
-    def name
-      @name
-    end
-  end
-
+  
   private
   def alarm_params
-    params.require(:alarm).permit(:label, :time)
+    form_params = params.require(:alarm).permit!
+    form_params[:user_id] = params[:user_id]
+    form_params
   end
 end
