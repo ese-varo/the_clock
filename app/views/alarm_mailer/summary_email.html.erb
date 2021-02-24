@@ -3,9 +3,9 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-  <h1>Summary of the day <%= Date.now  %></h1>
-  <p>
-    These are the stopwatches for today
+  <h1>Summary of the day <%= @user.email  %></h1>
+  <p> 
+  These are the stopwatches for today <%= @alarms[0] %>
   </p>
   <p>
     These are the alarms for tomorrow
