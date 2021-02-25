@@ -3,12 +3,17 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-  <h1>Summary of the day <%= @user.email  %></h1>
-  <p> 
-  These are the stopwatches for today <%= @alarms[0] %>
-  </p>
+  <h1>Summary of the day <%= DateTime.now.strftime("%d/%m/%Y") %></h1>
+  <h3>Stopwatches record</h3>
+  <ul>
+    <% @stopwatches.each do |stopwatch| %>
+      <li>
+        Name: <%= stopwatch.label %>, time: <%= stopwatch.time %>
+      </li>
+    <% end %>
+  </ul>
   <p>
-    These are the alarms for tomorrow
+    These are your alarms for tomorrow
   </p>
 
   <p>Thanks for register and have a great day!</p>
