@@ -2,7 +2,7 @@
 <ul>
   <% @stopwatches.each do |stopwatch| %>
     <li>
-      <%= stopwatch.label  %>: <%= sprintf("%.2d", (stopwatch.time.to_i % (1000 * 60 * 60)) / (1000 * 60)) %>:<%= sprintf("%.2d", (stopwatch.time.to_i % (1000 * 60)) / 1000) %>. Date: <%= stopwatch.created_at.strftime('%FT%T') %>
+      <%= stopwatch.label  %>: <%= stopwatch.time%>. Date: <%= stopwatch.created_at.strftime('%FT%T') %>
     </li>
     <%= button_to 'Remove stopwatch record', user_stopwatch_path(current_user, stopwatch), method: :delete %>
   <% end %>
