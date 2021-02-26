@@ -6,15 +6,22 @@
   <h1>Summary of the day <%= DateTime.now.strftime("%d/%m/%Y") %></h1>
   <h3>Stopwatches record</h3>
   <ul>
-    <% @stopwatches.each do |stopwatch| %>
+    <% @summary['stopwatches'].each do |stopwatch| %>
       <li>
         Name: <%= stopwatch.label %>, time: <%= stopwatch.time %>
       </li>
     <% end %>
   </ul>
-  <p>
+  <h3>
     These are your alarms for tomorrow
-  </p>
+  </h3>
+  <ul>
+    <% @summary['alarms'].each do |alarm| %>
+      <li>
+        Name: <%= alarm.label %>, Date: <%= alarm.time %>
+      </li>
+    <% end %>
+  </ul>
 
   <p>Thanks for register and have a great day!</p>
 </body>

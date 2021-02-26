@@ -20,10 +20,5 @@
     <h2>Set new Alarm</h2>
     <p><%= link_to 'My alarms', user_alarms_path(current_user) %></p>
   </article>
-  </br>
-  <p><%= link_to 'Sign out', destroy_user_session_path, method: :delete %></p>
-  <p><%= link_to 'Edit my account', edit_user_registration_path %></p>
-<% else %>
-  <p><%= link_to 'Sign in', new_user_session_path %></p>
-  <p><%= link_to 'Register', new_user_registration_path %></p>
+<%= javascript_pack_tag 'clock' %>
 <% end %>

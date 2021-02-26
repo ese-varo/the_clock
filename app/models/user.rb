@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :name, presence: true
-  has_many :timezones
-  has_many :stopwatches
-  has_many :alarms
+  has_many :timezones, dependent: :destroy
+  has_many :stopwatches, dependent: :destroy
+  has_many :alarms, dependent: :destroy
 end

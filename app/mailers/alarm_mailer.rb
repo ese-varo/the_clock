@@ -7,10 +7,9 @@ class AlarmMailer < ApplicationMailer
     mail(to: @user.email, subject: 'A new alarm registered')
   end
   
-  def summary_email
+  def summary_email(summary)
     @user = params[:user]
-    @alarms = @user.alarms
-    @stopwatches = @user.stopwatches.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+    @summary = ActiveSupport::JSON.decode(summary)
     mail(to: @user.email, subject: 'This is the summary of the day')
   end
 end
