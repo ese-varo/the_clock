@@ -7,7 +7,14 @@
 
   <div>
     <%= form.label :time %><br>
-    <%= form.datetime_field :time, :value => DateTime.now.strftime('%Y-%m-%dT%H:%M') %>
+    <%= form.time_field :time, :value => DateTime.now.strftime('%H:%M') %>
+  </div>
+
+  <div>
+    <% @days.each_with_index do |day, index| %>
+      <%= check_box_tag('days', value = day[1], checked = false, :name=> 'days[]', id: index) %>
+      <%= day[0] %>
+    <% end %>
   </div>
   
   <div>

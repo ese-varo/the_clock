@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  daytime: 2021-02-25 23:30:23
+  alarm: one
+
+two:
+  daytime: 2021-02-25 23:30:23
+  alarm: two
