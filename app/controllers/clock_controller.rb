@@ -42,7 +42,7 @@ class ClockController < ApplicationController
   end
   
   def destroy
-    @timezone = current_user.timezones.find(params[:id])
+    @timezone = Timezone.find(params[:id])
     @timezone.destroy
     redirect_to root_path
   end

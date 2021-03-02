@@ -1,10 +1,16 @@
-<% @timezones.each do |timezone| %>
-  <%= render 'timezone', timezone: timezone %>  
-  
-  <% if user_signed_in? %>
-    <%= button_to 'Save as favorite', clock_index_path, method: :post, params: { name: timezone.name} %>
+<div class="row">
+  <% @timezones.each do |timezone| %>
+    <div class="col-3">
+    <div class="card text-center shadow p-3 mb-3 bg-body rounded">
+      <div class="card-body">
+        <%= render 'timezone', timezone: timezone %>  
+        
+        <% if user_signed_in? %>
+          <%= button_to 'Save as favorite', clock_index_path, method: :post, params: { name: timezone.name}, class: "btn btn-secondary" %>
+        <% end %>
+      </div>
+    </div>
+    </div>
   <% end %>
-  </rb>
-<% end %>
-
+</div>
 <%= link_to 'Back to main', clock_index_path %>
