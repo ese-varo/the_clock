@@ -1,24 +1,10 @@
 <section>
   <article>
     <h2>Your current tiemzone</h2>
-    <%= render 'shared/timezone', timezone: @current_timezone %>
-    <p><%= link_to 'See all available timezones', all_timezones_path(current_user) %></p>
-    <% if user_signed_in? %>
-      <p><%= link_to 'See all favorite timezones', favorites_timezones_path(current_user) %></p>
-    <% end %>
-  </article>
-  <article>
-    <h2>Stopwatch</h2>
-    <% if user_signed_in? %>
-      <p><%= link_to 'New stopwatch', new_user_stopwatch_path(current_user) %></p>
-      <p><%= link_to 'My stopwatch records', user_stopwatches_path(current_user) %></p>
-    <% end %>
+    <%= render 'timezone', timezone: @current_timezone %>
+    <p><%= link_to 'Available timezones', all_timezones_path(current_user) %></p>
+    <p><%= link_to 'My favorite timezones', favorites_timezones_path(current_user) %></p>
+    <p><%= link_to 'Back to main page', root_path %></p>
   </article>
 </section>
-<% if user_signed_in? %>
-  <article>
-    <h2>Set new Alarm</h2>
-    <p><%= link_to 'My alarms', alarms_path %></p>
-  </article>
 <%= javascript_pack_tag 'clock' %>
-<% end %>

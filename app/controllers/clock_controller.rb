@@ -1,6 +1,10 @@
 class ClockController < ApplicationController
+  def main
+    current_timezone
+  end
+
   def index
-    @current_timezone = Time.zone
+    current_timezone
   end
 
   def timezones
@@ -24,6 +28,19 @@ class ClockController < ApplicationController
     end
   end
 
+  def edit
+    @timezones = ActiveSupport::TimeZone.all.map {|zone| [zone.name, zone.name]}
+  end
+
+  def update
+    current_user.timezone = params[:timezone]
+    if current_user.save
+      redirect_to clock_index_path
+    else 
+      render :new
+    end
+  end
+  
   def destroy
     @timezone = current_user.timezones.find(params[:id])
     @timezone.destroy
@@ -33,5 +50,13 @@ class ClockController < ApplicationController
   private 
   def timezone_params
     params.permit(:name, :user_id)
+  end
+
+  def user_timezone
+    user_signed_in? && current_user.timezone ? ActiveSupport::TimeZone.new(current_user.timezone) : Time.zone
+  end
+
+  def current_timezone
+    @current_timezone ||= user_timezone
   end
 end
