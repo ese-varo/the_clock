@@ -10,15 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_26_172435) do
-
-  create_table "alarm_days", force: :cascade do |t|
-    t.datetime "daytime"
-    t.integer "alarm_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["alarm_id"], name: "index_alarm_days_on_alarm_id"
-  end
+ActiveRecord::Schema.define(version: 2021_03_02_004003) do
 
   create_table "alarms", force: :cascade do |t|
     t.string "label"
@@ -27,7 +19,9 @@ ActiveRecord::Schema.define(version: 2021_02_26_172435) do
     t.boolean "repeat_days", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.time "time"
     t.integer "user_id", null: false
+    t.string "days"
     t.index ["user_id"], name: "index_alarms_on_user_id"
   end
 
@@ -61,7 +55,6 @@ ActiveRecord::Schema.define(version: 2021_02_26_172435) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "alarm_days", "alarms"
   add_foreign_key "alarms", "users"
   add_foreign_key "stopwatches", "users"
   add_foreign_key "timezones", "users"

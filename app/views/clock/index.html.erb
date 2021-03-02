@@ -18,7 +18,7 @@
 <% if user_signed_in? %>
   <article>
     <h2>Set new Alarm</h2>
-    <p><%= link_to 'My alarms', user_alarms_path(current_user) %></p>
+    <p><%= link_to 'My alarms', alarms_path %></p>
   </article>
 <%= javascript_pack_tag 'clock' %>
 <% end %>

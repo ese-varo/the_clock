@@ -8,9 +8,9 @@ Rails.application.routes.draw do
   resources :users do
     resources :clock, except: [:index]
     resources :stopwatches
-    resources :alarms
   end
 
+  resources :alarms
   root to: 'clock#index'
   get 'all_timezones',      to: 'clock#timezones'
   get 'stopwatch',          to: 'clock#stopwatch'
