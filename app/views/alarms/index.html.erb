@@ -4,8 +4,9 @@
 <ol>
   <% @alarms.each do |alarm|  %>
   <li>
-    <%= alarm.label %>
-    <%= alarm.time %>
+    Label: <%= alarm.label %><br>
+    Time: <%= alarm.format_time %><br>
+    Days: <%= alarm.days.join(', ') %>
     <%= button_to 'Remove alarm', alarm_path(alarm), method: :delete %>
     <%= button_to 'Update alarm', edit_alarm_path(alarm), method: :get %>
   </li>

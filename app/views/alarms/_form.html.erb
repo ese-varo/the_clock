@@ -3,7 +3,7 @@
     <%= form.label :label, class: "form-label" %><br>
     <%= form.text_field :label, class: "form-control" %>
     <%= form.label :time, class: "form-label mt-4" %><br>
-    <%= form.time_field :time, :value => DateTime.now.strftime('%H:%M'), class: "form-control"%>
+    <%= form.time_field :time, class: "form-control"%>
     <%= form.label "Days", class: "form-label mt-4" %><br>
     <% Date::DAYNAMES.each do |day| %>
       <%= form.check_box :days, { multiple: true }, day, false %>
