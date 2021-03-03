@@ -8,6 +8,10 @@ class StopwatchesController < ApplicationController
     end
   end
 
+  def show
+    @stopwatch = Stopwatch.find(params[:id])
+  end
+
   def create
     @stopwatch = current_user.stopwatches.create(stopwatch_params)
     if @stopwatch
