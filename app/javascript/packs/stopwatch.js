@@ -1,9 +1,8 @@
 import Rails from "@rails/ujs"
 const startBtn = document.getElementById("start");
-const stopBtn = document.getElementById("stop");
+//const stopBtn = document.getElementById("stop");
 const resetBtn = document.getElementById("reset");
 const recordBtn = document.getElementById("record");
-const pauseBtn = document.getElementById("pause");
 const minutesLabel = document.getElementById("minutes");
 const secondsLabel = document.getElementById("seconds");
 const listRecords = document.getElementById("records");
@@ -22,21 +21,27 @@ function startTimer() {
         startTime = new Date().getTime();
         interval = setInterval(showTime, 1);
         running = true;
+        paused = false;
+}
+
+function stopTimer() {
+        clearInterval(interval);
+        savedTime = difference;
+        paused = true;
+        running = false;
+        startBtn.innerText = 'Start';
 }
 
 startBtn.addEventListener('click', () => {
         if (!running) {
                 console.log("Start timer");
                 startTimer();
+                startBtn.innerText = 'Pause';
+        } else {
+               stopTimer(); 
         }
 });
 
-stopBtn.addEventListener('click', () => {
-        console.log("Stop timer");
-        if (difference) {
-                clearInterval(interval);       
-        }
-});
 
 resetBtn.addEventListener('click', () => {
         console.log("Reset Time");
@@ -54,18 +59,6 @@ resetBtn.addEventListener('click', () => {
         }
 });
 
-pauseBtn.addEventListener('click', () => {
-        if (!difference) {
-
-        } else if (!paused) {
-                clearInterval(interval);
-                savedTime = difference;
-                paused = true;
-        } else {
-                startTimer();
-                paused = false;
-        }
-});
 
 recordBtn.addEventListener('click', () => {
         console.log(labelInput.value);
@@ -84,7 +77,7 @@ recordBtn.addEventListener('click', () => {
                         },
                         credentials: 'same-origin'
                 }).then( (response) => {
-                        console.log(response.json());
+                        console.log(response);
                 });
         }
 });

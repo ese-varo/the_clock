@@ -1,8 +1,6 @@
 <section>
   <article>
-    <h2>Your current tiemzone</h2>
-    <%= render 'timezone', timezone: @current_timezone %>
-    <p><%= link_to 'Available timezones', all_timezones_path(current_user) %></p>
+    <%= render 'my_timezone' %>
     <p><%= link_to 'My favorite timezones', favorites_timezones_path(current_user) %></p>
     <p><%= link_to 'Back to main page', root_path %></p>
   </article>
