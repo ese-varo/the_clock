@@ -1,6 +1,5 @@
 import Rails from "@rails/ujs"
 const startBtn = document.getElementById("start");
-//const stopBtn = document.getElementById("stop");
 const resetBtn = document.getElementById("reset");
 const recordBtn = document.getElementById("record");
 const minutesLabel = document.getElementById("minutes");
@@ -12,7 +11,6 @@ let startTime;
 let updatedTime;
 let interval;
 let difference;
-let recordCounter = 1;
 let savedTime;
 let paused = false;
 let running = false;
@@ -52,7 +50,6 @@ resetBtn.addEventListener('click', () => {
         records = [];
         paused = false;
         running = false;
-        recordCounter = 1;
         labelInput.value = "";
         while (listRecords.firstChild) {
                 listRecords.removeChild(listRecords.lastChild);
@@ -65,9 +62,6 @@ recordBtn.addEventListener('click', () => {
         if(!labelInput.value) {
                 alert("Label is empty");
         } else {
-                let li = document.createElement("li");
-                li.innerText = `${recordCounter++}. Time: ${minutesLabel.textContent}:${secondsLabel.textContent}`;
-                listRecords.appendChild(li);
                 fetch(`/users/${userId}/stopwatches`, {
                         method: 'post',
                         body: JSON.stringify({label: labelInput.value, time: difference}),

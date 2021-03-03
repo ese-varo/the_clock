@@ -1,11 +1,12 @@
 <h1>Stopwatches</h1>
 <%= render 'stopwatch' %>
-<ul>
-  <% @stopwatches.each do |stopwatch| %>
-    <li>
-      <%= stopwatch.label  %>: <%= stopwatch.time %>. Date: <%= stopwatch.created_at.strftime('%FT%T') %>
+<h4>Records</h4>
+<ul id="records" class="list-group mb-4">
+  <% current_user.stopwatches.each do |stopwatch| %>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Label: <%= stopwatch.label %>, Time: <%= stopwatch.time %>
+  <%= button_to 'Remove', user_stopwatch_path(current_user, stopwatch), method: :delete, class: "btn btn-danger btn-sm" %>
     </li>
-    <%= button_to 'Remove stopwatch record', user_stopwatch_path(current_user, stopwatch), method: :delete %>
   <% end %>
 </ul>
 <%= link_to 'Back to Home', root_path %>

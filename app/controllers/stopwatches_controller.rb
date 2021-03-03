@@ -1,8 +1,6 @@
 class StopwatchesController < ApplicationController
   
   def index
-    @stopwatches = current_user.stopwatches
-    @stopwatch = Stopwatch.new
   end
 
   def create

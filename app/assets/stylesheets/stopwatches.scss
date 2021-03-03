@@ -1,7 +1,7 @@
 // Place all the styles related to the Stopwatches controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-.round-time {
+.stopwatch-view {
         width: 130px;
         height: 130px;
         padding: 30px;
@@ -11,4 +11,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+}
+
+.stopwatch-record-card {
+        width: 200px;
 }
