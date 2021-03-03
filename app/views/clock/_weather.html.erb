@@ -1,0 +1,4 @@
+<% if weather && weather["cod"] == 200 %>
+  <p class="text-center">Weather: <%= weather["weather"][0]["main"] %></p>
+  <p class="text-center">Temperature: <%= weather["main"]["temp"] %>°C</p>
+<% end %>

@@ -1,14 +1,18 @@
 class ClockController < ApplicationController
   def main
     current_timezone
+    @current_weather = current_weather(@current_timezone.name)
   end
 
   def index
     current_timezone
+    @current_weather = current_weather(@current_timezone.name)
   end
 
   def timezones
-    @timezones = ActiveSupport::TimeZone.all
+    @timezones = ActiveSupport::TimeZone.all[1..4].map do |timezone|
+      {timezone: timezone, weather: current_weather(timezone.name)}
+    end
   end
 
   def favorites
@@ -58,5 +62,9 @@ class ClockController < ApplicationController
 
   def current_timezone
     @current_timezone ||= user_timezone
+  end
+
+  def current_weather(timezone_name)
+    CurrentWeather.call(timezone_name)
   end
 end
