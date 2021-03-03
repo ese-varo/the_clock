@@ -1,2 +1,2 @@
 <h5 class="text-center"><%= timezone.name %></h5>
-<p class="text-center"><%= timezone.now.strftime('%F %T%:zUTC') %></p>
+<p class="text-center"><%= ClockDecorator.new(timezone).display_timezone %></p>

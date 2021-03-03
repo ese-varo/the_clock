@@ -2,9 +2,9 @@
 <%= render 'stopwatch' %>
 <h4>Records</h4>
 <ul id="records" class="list-group mb-4">
-  <% current_user.stopwatches.each do |stopwatch| %>
+  <% @stopwatches.each do |stopwatch| %>
     <li class="list-group-item d-flex justify-content-between align-items-center">
-      Label: <%= stopwatch.label %>, Time: <%= stopwatch.time %>
+      Label: <%= stopwatch.label %>
   <%= button_to 'Remove', user_stopwatch_path(current_user, stopwatch), method: :delete, class: "btn btn-danger btn-sm" %>
     </li>
   <% end %>
