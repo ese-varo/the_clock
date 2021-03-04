@@ -11,32 +11,12 @@
   </head>
 
   <body>
-    <section>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">The Clock</a>
-          <ul class="navbar-nav d-flex">
-<% if user_signed_in? %>
-            <li class="nav-item">
-  <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-  <%= link_to 'Edit my account', edit_user_registration_path, class: "nav-link" %>
-            </li>
-<% else %>
-            <li class="nav-item">
-              <%= link_to 'Sign in', new_user_session_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Register', new_user_registration_path, class: "nav-link"%>
-            </li>
-<% end %>
-          </ul>
-        </div>
-      </nav>
-    </section>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= render partial: 'layouts/navbar' %>
+    <% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: "alert alert-#{name}" %>
+    <% end -%>
+    <%# <p class="notice"><%= notice %1></p> %>
+    <%# <p class="alert"><%= alert %1></p> %>
     <div class="container">
       <%= yield %>
     </div>

@@ -1,4 +1,4 @@
 class Timezone < ApplicationRecord
   belongs_to :user
-  validates :label, presence: true
+  validates :name, presence: true
 end

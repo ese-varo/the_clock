@@ -7,16 +7,13 @@ class ClockController < ApplicationController
   def index
     current_timezone
     @current_weather = current_weather(@current_timezone.name)
+    @user_timezones = current_user.timezones
   end
 
   def timezones
-    @timezones = ActiveSupport::TimeZone.all[1..4].map do |timezone|
+    @timezones = user_signed_in? ? ActiveSupport::TimeZone.all[1..4].map do |timezone|
       {timezone: timezone, weather: current_weather(timezone.name)}
-    end
-  end
-
-  def favorites
-    @user_timezones = current_user.timezones
+    end : ActiveSupport::TimeZone.all.map { |timezone| {timezone: timezone} }
   end
 
   def new
@@ -28,6 +25,7 @@ class ClockController < ApplicationController
     if @timezone.save
       flash[:success] = "Timezone save as favorite"
     else
+      flash[:danger] = "Please check the timezone"
       render :new
     end
   end
@@ -53,7 +51,7 @@ class ClockController < ApplicationController
 
   private 
   def timezone_params
-    params.permit(:name, :user_id)
+    params.permit(:name)
   end
 
   def user_timezone

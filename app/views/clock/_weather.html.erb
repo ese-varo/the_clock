@@ -1,4 +1,15 @@
 <% if weather && weather["cod"] == 200 %>
-  <p class="text-center">Weather: <%= weather["weather"][0]["main"] %></p>
-  <p class="text-center">Temperature: <%= weather["main"]["temp"] %>°C</p>
+  <div class="d-flex justify-content-center">
+    <div class="row align-items-center">
+      <div class="col-4">
+        <%= image_tag(IconWeather.call(weather["weather"][0]["icon"])) %>
+      </div>
+      <div class="col-6"> 
+        <p class="m-0 text-center">Weather: <%= weather["weather"][0]["main"] %></p>
+        <p class="m-0 text-center">Temperature: <%= weather["main"]["temp"] %>°C</p>
+       </div>
+    </div>
+  </div>
+<% else %>
+  <h4 class="text-center"><span class="badge bg-light text-danger">The current weather is unavailable</span></h4>
 <% end %>

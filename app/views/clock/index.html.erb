@@ -1,7 +1,9 @@
 <section>
   <article>
     <%= render 'my_timezone' %>
-    <p><%= link_to 'My favorite timezones', favorites_timezones_path(current_user) %></p>
+    <hr>
+    <h4>My favorite timezones</h4>
+    <%= render 'favorites' %>
     <p><%= link_to 'Back to main page', root_path %></p>
   </article>
 </section>
