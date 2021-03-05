@@ -35,6 +35,7 @@ class StopwatchesController < ApplicationController
   def destroy
     @stopwatch = current_user.stopwatches.find(params[:id])
     @stopwatch.destroy
+    redirect_to user_stopwatches_path(current_user)
   end
 
   private

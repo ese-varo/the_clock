@@ -63,7 +63,9 @@ resetBtn.addEventListener('click', () => {
 recordBtn.addEventListener('click', () => {
         if(!labelInput.value) {
                 alert("Label is empty");
-        } else {
+        } else if(!running) {
+                alert("No time running");
+        }else {
                 difference = current_time - previous_time;
                 if(previous_time === 0) {
                         saveRecordOfStopwatch();
