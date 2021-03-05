@@ -10,7 +10,6 @@ class IconWeather < ApplicationService
 
   def call
     endpoint = URL + @icon_code + URL_SUFFIX
-    # request(endpoint)
     endpoint
   end
 

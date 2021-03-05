@@ -4,9 +4,8 @@
       <div class="card text-center box-shadow" style="border-bottom: 25px solid <%= user_signed_in? ? ClockDecorator.new(timezone[:weather]).select_color : '#F0F0F0' %>;">
       <div class="card-body">
         <%= render 'timezone', timezone: timezone[:timezone] %>  
-        
         <% if user_signed_in? %>
-        <%= render 'weather', weather: timezone[:weather], timezone_name: timezone[:timezone].name %>  
+          <%= render 'weather', weather: timezone[:weather], timezone_name: timezone[:timezone].name %>  
           <%= button_to 'Save as favorite', clock_index_path, method: :post, params: { name: timezone[:timezone].name}, class: "btn btn-primary btn-sm mt-2" %>
         <% end %>
       </div>

@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  #get 'stopwatches/index'
-  #get 'alarms/index'
-  #get 'alarm/index'
-  #get 'stopwatch/index'
   devise_for :users, controllers: { registrations: 'users/registrations' }
 
   resources :users do
