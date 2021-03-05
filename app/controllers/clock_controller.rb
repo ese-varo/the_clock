@@ -11,9 +11,17 @@ class ClockController < ApplicationController
   end
 
   def timezones
-    @timezones = user_signed_in? ? ActiveSupport::TimeZone.all[1..4].map do |timezone|
+    @timezones = user_signed_in? ? all_timezones[1..5].map do |timezone|
       {timezone: timezone, weather: current_weather(timezone.name)}
-    end : ActiveSupport::TimeZone.all.map { |timezone| {timezone: timezone} }
+    end : all_timezones.map { |timezone| {timezone: timezone} }
+  end
+
+  def show
+    @timezone = get_new_support_timezone(params[:id])
+    @weather = []
+    weather_days = forecast_weather(@timezone.name)
+    days = weather_days["list"].length/5
+    5.times { |position| @weather.push(weather_days["list"][(position*days)+2]) }
   end
 
   def new
@@ -24,6 +32,7 @@ class ClockController < ApplicationController
     @timezone = current_user.timezones.new(timezone_params)
     if @timezone.save
       flash[:success] = "Timezone save as favorite"
+      redirect_to clock_index_path
     else
       flash[:danger] = "Please check the timezone"
       render :new
@@ -31,7 +40,7 @@ class ClockController < ApplicationController
   end
 
   def edit
-    @timezones = ActiveSupport::TimeZone.all.map {|zone| [zone.name, zone.name]}
+    @timezones = all_timezones.map {|zone| [zone.name, zone.name]}
   end
 
   def update
@@ -45,8 +54,10 @@ class ClockController < ApplicationController
   
   def destroy
     @timezone = Timezone.find(params[:id])
-    @timezone.destroy
-    redirect_to root_path
+    if @timezone.destroy
+      flash[:info] = "Timezone deleted"
+      redirect_to clock_index_path
+    end
   end
 
   private 
@@ -55,7 +66,15 @@ class ClockController < ApplicationController
   end
 
   def user_timezone
-    user_signed_in? && current_user.timezone ? ActiveSupport::TimeZone.new(current_user.timezone) : Time.zone
+    user_signed_in? && current_user.timezone ? get_new_support_timezone(current_user.timezone) : Time.zone
+  end
+
+  def get_new_support_timezone(timezone)
+    ActiveSupport::TimeZone.new(timezone)
+  end
+
+  def all_timezones
+    ActiveSupport::TimeZone.all
   end
 
   def current_timezone
@@ -64,5 +83,9 @@ class ClockController < ApplicationController
 
   def current_weather(timezone_name)
     CurrentWeather.call(timezone_name)
+  end
+  
+  def forecast_weather(timezone_name)
+    ForecastWeather.call(timezone_name)
   end
 end

@@ -2,7 +2,7 @@
   <article>
     <%= render 'timezone', timezone: @current_timezone %>
     <% if user_signed_in? %>
-      <%= render 'weather', weather: @current_weather %>  
+      <%= render 'weather', weather: @current_weather, timezone_name: @current_timezone.name %>  
     <% end %>
     <div class="row">
       <% if user_signed_in? %>

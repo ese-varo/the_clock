@@ -4,12 +4,15 @@
       <div class="col-4">
         <%= image_tag(IconWeather.call(weather["weather"][0]["icon"])) %>
       </div>
-      <div class="col-6"> 
+      <div class="col-8"> 
         <p class="m-0 text-center">Weather: <%= weather["weather"][0]["main"] %></p>
         <p class="m-0 text-center">Temperature: <%= weather["main"]["temp"] %>°C</p>
        </div>
     </div>
   </div>
+  <div class="text-center">
+    <%= button_to 'See forecast', clock_path(timezone_name), method: :get, class: "btn btn-outline-info btn-sm" %>
+  </div>
 <% else %>
-  <h4 class="text-center"><span class="badge bg-light text-danger">The current weather is unavailable</span></h4>
+  <h4 class="text-center"><span class="badge bg-light text-danger">The weather is unavailable</span></h4>
 <% end %>

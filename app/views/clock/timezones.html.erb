@@ -1,17 +1,17 @@
 <div class="row">
   <% @timezones.each do |timezone| %>
     <div class="col-4">
-    <div class="card text-center shadow p-3 mb-3 bg-body rounded">
+      <div class="card text-center box-shadow" style="border-bottom: 25px solid <%= user_signed_in? ? ClockDecorator.new(timezone[:weather]).select_color : '#F0F0F0' %>;">
       <div class="card-body">
         <%= render 'timezone', timezone: timezone[:timezone] %>  
         
         <% if user_signed_in? %>
-        <%= render 'weather', weather: timezone[:weather] %>  
-          <%= button_to 'Save as favorite', clock_index_path, method: :post, params: { name: timezone[:timezone].name}, class: "btn btn-secondary" %>
+        <%= render 'weather', weather: timezone[:weather], timezone_name: timezone[:timezone].name %>  
+          <%= button_to 'Save as favorite', clock_index_path, method: :post, params: { name: timezone[:timezone].name}, class: "btn btn-primary btn-sm mt-2" %>
         <% end %>
       </div>
     </div>
     </div>
   <% end %>
 </div>
-<%= link_to 'Back to main', user_signed_in? ? clock_index_path : root_path%>
+<%= link_to 'Back to main', user_signed_in? ? clock_index_path : root_path, class: "btn btn-primary mb-5"%>
