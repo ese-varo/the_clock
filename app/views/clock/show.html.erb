@@ -1,0 +1,18 @@
+<div class="card w-75 mx-auto shadow p-3 mb-5 bg-body rounded">
+  <div class="card-body">
+    <h4 class="card-title"><%= @timezone.name  %></h4>
+    <h6 class="card-subtitle mb-2 text-muted">Timezone info: <%= @timezone.tzinfo %></h6>
+    <div class="row mt-4">
+      <% @weather.each do |weather| %>
+        <div class="col d-flex flex-column align-items-center">
+          <%= Time.at(weather["dt"]).strftime("%A")  %>
+          <%= image_tag(IconWeather.call(weather["weather"][0]["icon"])) %>
+          <small><%= weather["weather"][0]["description"]%></small>
+          <p><%= weather["weather"][0]["main"]%></p>
+          <p><%= weather["main"]["temp"]%>°C</p>
+        </div> 
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= link_to 'Back to Home', root_path %>

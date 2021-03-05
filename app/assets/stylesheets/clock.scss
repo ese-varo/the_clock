@@ -4,6 +4,14 @@
  .alert-notice {
         background-color: rgba(123, 001, 59, 0.3);
  }
+ 
  .alert-alert {
         background-color: rgba(98, 241, 156, 0.3);
  }
+
+ .box-shadow {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        padding: 20px;
+        margin-bottom: 40px;
+        border-radius: 5px;
+}

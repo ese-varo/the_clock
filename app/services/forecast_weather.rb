@@ -1,7 +1,7 @@
 require 'httparty'
 require 'json'
-class CurrentWeather < ApplicationService
-  URL = 'https://api.openweathermap.org/data/2.5/weather?q='.freeze
+class ForecastWeather < ApplicationService
+  URL = 'https://api.openweathermap.org/data/2.5/forecast?q='.freeze
   URL_SUFFIX = '&units=metric&APPID='.freeze
 
   def initialize(city_name)
@@ -14,8 +14,7 @@ class CurrentWeather < ApplicationService
   end
 
   private
-   def request(url)
+  def request(url)
     HTTParty.get(url.gsub(' ', '%20'))
-   end
-
+  end
 end
