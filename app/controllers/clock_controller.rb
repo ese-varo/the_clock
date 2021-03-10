@@ -18,10 +18,7 @@ class ClockController < ApplicationController
 
   def show
     @timezone = get_new_support_timezone(params[:id])
-    @weather = []
-    weather_days = forecast_weather(@timezone.name)
-    days = weather_days["list"].length/5
-    5.times { |position| @weather.push(weather_days["list"][(position*days)+2]) }
+    @weather = next_forecast_days(@timezone.name)
   end
 
   def new
@@ -87,5 +84,9 @@ class ClockController < ApplicationController
   
   def forecast_weather(timezone_name)
     ForecastWeather.call(timezone_name)
+  end
+
+  def next_forecast_days(timezone_name)
+    NextForecastDays.call(timezone_name)
   end
 end
