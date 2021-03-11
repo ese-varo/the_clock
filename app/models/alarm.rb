@@ -1,4 +1,5 @@
 class Alarm < ApplicationRecord
   belongs_to :user
-  has_many :alarmDays, dependent: :destroy
+  serialize :days, Array
+  validates :days, presence: true, on: :create
 end

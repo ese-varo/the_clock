@@ -1,7 +1,0 @@
-<% @user_timezones.each do |timezone| %>
-  <%= render 'shared/timezone', timezone: ActiveSupport::TimeZone.new(timezone.name) %>
-  <%= button_to 'Remove favorite timezone', user_clock_path(current_user, timezone), method: :delete %>
-  </rb>
-<% end %>
-
-<%= link_to 'Back to Home', root_path %>

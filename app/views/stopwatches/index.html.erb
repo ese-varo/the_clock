@@ -1,10 +1,18 @@
-<h1>Stopwatches</h1>
-<ul>
+<h2>Stopwatches</h2>
+<%= render 'stopwatch' %>
+<h4>Records</h4>
+<ul id="records" class="list-group mb-4">
   <% @stopwatches.each do |stopwatch| %>
-    <li>
-      <%= stopwatch.label  %>: <%= stopwatch.time %>. Date: <%= stopwatch.created_at.strftime('%FT%T') %>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div class="d-flex flex-column">
+        Label: <%= stopwatch.label %>
+      <small><span>Shortes lap on the stopwatch:</span> <%= StopwatchDecorator.new(Lap.shorter_lap(stopwatch.id)).display_lap_difference  %> </small> 
+      </div>
+      <div class="d-flex">
+        <%= button_to 'Show laps', user_stopwatch_path(current_user, stopwatch), method: :get, class: "btn btn-info btn-sm mr-2" %>
+        <%= button_to 'Remove', user_stopwatch_path(current_user, stopwatch), method: :delete, class: "btn btn-danger btn-sm" %>
+      </div>
     </li>
-    <%= button_to 'Remove stopwatch record', user_stopwatch_path(current_user, stopwatch), method: :delete %>
   <% end %>
 </ul>
 <%= link_to 'Back to Home', root_path %>

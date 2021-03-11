@@ -1,0 +1,15 @@
+<div class="card w-75 mx-auto">
+  <%= link_to 'Back', user_stopwatches_path(current_user), class: "back-button" %>
+  <div class="card-body">
+    <h5 class="card-title">Stopwatch record</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Name: <%= @stopwatch.label %></h6>
+    <small class="card-subtitle mb-2 text-info">Created_at: <%= @stopwatch.created_at.strftime('%F %H:%M%p') %></small>
+    <ol class="list-group mt-4">
+      <% @stopwatch.laps.each do |lap| %>
+        <li class="list-group-item">
+          Lap Time: <%= StopwatchDecorator.new(lap).display_lap_time %> -  Lap duration: <%= StopwatchDecorator.new(lap).display_lap_difference %>
+        </li>  
+      <% end %>
+    </ol>
+  </div>
+</div>

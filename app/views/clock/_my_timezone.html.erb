@@ -1,0 +1,14 @@
+<section class="my-3 shadow p-3 mb-5 bg-body rounded" >
+  <article>
+    <%= render 'timezone', timezone: @current_timezone %>
+    <% if user_signed_in? %>
+      <%= render 'weather', weather: @current_weather, timezone_name: @current_timezone.name %>  
+    <% end %>
+    <div class="row">
+      <% if user_signed_in? %>
+        <div class="col text-center"><%= link_to 'Select my timezone', edit_clock_path(current_user) %></div>
+      <% end %>
+      <div class="col text-center"><%= link_to 'See all available timezones', all_timezones_path %></div>
+    </div>
+  </article>
+</section>

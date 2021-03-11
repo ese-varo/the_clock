@@ -1,25 +1,3 @@
 <h1> New Alarm </h1>
-<%= form_with model: [@user, @alarm]  do |form| %>
-  <div>
-    <%= form.label :label %><br>
-    <%= form.text_field :label %>
-  </div>
-
-  <div>
-    <%= form.label :time %><br>
-    <%= form.time_field :time, :value => DateTime.now.strftime('%H:%M') %>
-  </div>
-
-  <div>
-    <% @days.each_with_index do |day, index| %>
-      <%= check_box_tag('days', value = day[1], checked = false, :name=> 'days[]', id: index) %>
-      <%= day[0] %>
-    <% end %>
-  </div>
-  
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
-
+<%= render "form", alarm: @alarm %>
 <%= link_to 'Back to Home', root_path %>

@@ -1,15 +1,18 @@
-<%= form_with model: [@user, @alarm]  do |form| %>
+<%= form_with model: @alarm  do |form| %>
   <div>
-    <%= form.label :label %><br>
-    <%= form.text_field :label %>
-  </div>
-
+    <%= form.label :label, class: "form-label" %><br>
+    <%= form.text_field :label, class: "form-control" %>
+    <%= form.label :time, class: "form-label mt-4" %><br>
+    <%= form.time_field :time, class: "form-control"%>
+    <%= form.label "Days", class: "form-label mt-4" %><br>
+    <% Date::DAYNAMES.each do |day| %>
+      <%= form.check_box :days, { multiple: true }, day, false %>
+      <%= day %>
+    <% end %>
+  </div> 
   <div>
-    <%= form.label :time %><br>
-    <%= form.time_field :time %>
-  </div>
-  
-  <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-primary my-4" %>
   </div>
 <% end %>
+
+

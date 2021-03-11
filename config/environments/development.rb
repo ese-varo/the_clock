@@ -86,4 +86,6 @@ Rails.application.configure do
     # Default value is `:default` that renders styled message with showing useful metadata.
     config.message_template = :light
   end
+
+  config.open_weather_key = '866b5463b979e3ffb0a4f566137f898f'
 end

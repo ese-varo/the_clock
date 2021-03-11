@@ -1,19 +1,14 @@
 <h1>Alarms</h1>
-<%= link_to "New Alarm", new_user_alarm_path %>
+<%= link_to "New Alarm", new_alarm_path %>
 <h3>All my alarms</h3>
 <ol>
   <% @alarms.each do |alarm|  %>
   <li>
-    <%= alarm[0].label %>
-    <ol>
-      <% alarm[1].each do |alarm_days| %>
-        <li>
-          <%= alarm_days.daytime.to_formatted_s(:long)%>
-        </li>
-      <% end %>
-    </ol>  
-    <%= button_to 'Remove alarm', user_alarm_path(current_user, alarm[0]), method: :delete %>
-    <%= button_to 'Update alarm', edit_user_alarm_path(current_user, alarm[0]), method: :get %>
+    Label: <%= alarm.label %><br>
+    Time: <%= alarm.display_time %><br>
+    Days: <%= alarm.days.join(', ') %>
+    <%= button_to 'Remove alarm', alarm_path(alarm), method: :delete %>
+    <%= button_to 'Update alarm', edit_alarm_path(alarm), method: :get %>
   </li>
   <% end %>
 </ol>
