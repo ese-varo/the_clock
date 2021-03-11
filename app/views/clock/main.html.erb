@@ -1,15 +1,15 @@
 <%= render 'my_timezone' %>
 <% if user_signed_in? %>
-<section class="row mt-5">
-  <article class="col-4 text-center">
-    <h2><%= link_to 'My timezones', clock_index_path %></h2>
-  </article>
-  <article class="col-4 text-center">
-    <h2><%= link_to 'My stopwatches', user_stopwatches_path(current_user) %></h2>
-  </article>
-  <article class="col-4 text-center">
-    <h2><%= link_to 'My alarms', alarms_path %></h2>
-    <p></p>
-  </article>
-</section>
+  <section class="row mt-5">
+    <article class="col-4 text-center">
+      <h2><%= link_to 'My timezones', clock_index_path %></h2>
+    </article>
+    <article class="col-4 text-center">
+      <h2><%= link_to 'My stopwatches', user_stopwatches_path(current_user) %></h2>
+    </article>
+    <article class="col-4 text-center">
+      <h2><%= link_to 'My alarms', alarms_path %></h2>
+      <p></p>
+    </article>
+  </section>
 <% end %>

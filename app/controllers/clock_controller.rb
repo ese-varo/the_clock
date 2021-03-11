@@ -11,9 +11,12 @@ class ClockController < ApplicationController
   end
 
   def timezones
-    @timezones = user_signed_in? ? ActiveSupport::TimeZone.all[1..5].map do |timezone|
-      {timezone: timezone, weather: current_weather(timezone.name)}
-    end : ActiveSupport::TimeZone.all.map { |timezone| {timezone: timezone} }
+    @timezones = user_signed_in? ? WeatherSetter.new(all_timezones[1..5]).call : all_timezones
+  end
+
+  def show
+    @timezone = get_new_support_timezone(params[:id])
+    @weather = next_forecast_days(@timezone.name)
   end
 
   def show
@@ -40,7 +43,7 @@ class ClockController < ApplicationController
   end
 
   def edit
-    @timezones = ActiveSupport::TimeZone.all.map {|zone| [zone.name, zone.name]}
+    @timezones = all_timezones.map {|zone| [zone.name, zone.name]}
   end
 
   def update
@@ -66,7 +69,15 @@ class ClockController < ApplicationController
   end
 
   def user_timezone
-    user_signed_in? && current_user.timezone ? ActiveSupport::TimeZone.new(current_user.timezone) : Time.zone
+    user_signed_in? && current_user.timezone ? get_new_support_timezone(current_user.timezone) : Time.zone
+  end
+
+  def get_new_support_timezone(timezone)
+    ActiveSupport::TimeZone.new(timezone)
+  end
+
+  def all_timezones
+    ActiveSupport::TimeZone.all
   end
 
   def current_timezone
@@ -79,5 +90,9 @@ class ClockController < ApplicationController
   
   def forecast_weather(timezone_name)
     ForecastWeather.call(timezone_name)
+  end
+  
+  def next_forecast_days(timezone_name)
+    NextForecastDays.call(timezone_name)
   end
 end

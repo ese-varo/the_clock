@@ -4,7 +4,7 @@ class StopwatchesController < ApplicationController
     @stopwatches = current_user.stopwatches
     respond_to do |format|
       format.html
-      format.json { render json: @stopwatches}
+      format.json { render json: @stopwatch }
     end
   end
 
@@ -14,10 +14,12 @@ class StopwatchesController < ApplicationController
 
   def create
     @stopwatch = current_user.stopwatches.create(stopwatch_params)
-    if @stopwatch
+    if @stopwatch.valid?
       @stopwatch.laps.create(stopwatch_lap_params)
+      flash[:success] = 'Stopwatch created successfully, starting to record laps'
       render json: @stopwatch
-    else 
+    else
+      shows_errors(@stopwatch.errors)
       render :new
     end
   end
@@ -25,9 +27,10 @@ class StopwatchesController < ApplicationController
   def update
     @stopwatch = Stopwatch.find(params[:id])
     @lap = @stopwatch.laps.create(stopwatch_lap_params)
-    if @lap
+    if @lap.valid?
       @stopwatches = current_user.stopwatches
     else
+      shows_errors(@lap.errors)
       render :new
     end
   end
@@ -35,6 +38,13 @@ class StopwatchesController < ApplicationController
   def destroy
     @stopwatch = current_user.stopwatches.find(params[:id])
     @stopwatch.destroy
+    if @stopwatch.valid?
+      flash[:success] = 'Stopwatch deleted successfully'
+      redirect_to user_stopwatches_path(current_user)
+    else 
+      shows_errors(@stopwatch.errors)
+      render :new
+    end
   end
 
   private
@@ -44,5 +54,11 @@ class StopwatchesController < ApplicationController
 
   def stopwatch_lap_params
     params.permit(:time, :difference)
+  end
+  
+  def shows_errors(errors)
+    errors.full_messages.each do |error|
+      flash[:danger] = error
+    end
   end
 end

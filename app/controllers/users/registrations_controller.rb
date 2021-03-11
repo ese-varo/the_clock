@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-    SummaryNotificationJob.set(wait: 15.seconds).perform_later(current_user)
+    SummaryNotificationJob.set(wait: 24.hours).perform_later(current_user)
   end
 
   # GET /resource/edit
