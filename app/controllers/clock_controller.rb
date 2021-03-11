@@ -11,9 +11,7 @@ class ClockController < ApplicationController
   end
 
   def timezones
-    @timezones = user_signed_in? ? all_timezones[1..5].map do |timezone|
-      {timezone: timezone, weather: current_weather(timezone.name)}
-    end : all_timezones.map { |timezone| {timezone: timezone} }
+    @timezones = user_signed_in? ? WeatherSetter.new(all_timezones[1..5]).call : all_timezones
   end
 
   def show
