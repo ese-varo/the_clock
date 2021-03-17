@@ -1,4 +1,5 @@
 FactoryBot.define do
-  factory :timezone do
+  factory :alarm do
+    
   end
 end

@@ -1,4 +1,5 @@
 FactoryBot.define do
-  factory :timezone do
+  factory :lap do
+    
   end
 end

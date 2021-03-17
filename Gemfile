@@ -62,6 +62,8 @@ group :test do
   gem 'webdrivers'
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
   gem 'launchy-rails'
+  gem 'simplecov', require: false, group: :test
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
