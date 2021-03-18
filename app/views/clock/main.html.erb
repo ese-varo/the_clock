@@ -1,4 +1,6 @@
-<%= render 'my_timezone' %>
+<% unless user_signed_in? %>
+  <%= render 'my_timezone' %>
+<% end %>
 <% if user_signed_in? %>
   <section class="row mt-5">
     <article class="col-4 text-center">

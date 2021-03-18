@@ -1,11 +1,19 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
+
+require 'spec_helper'
 require 'rspec/rails'
-# Add additional requires below this line. Rails is not loaded until this point!
+require 'devise'
+require 'support/controller_macros'
+require 'capybara/rails'
+require 'support/factory_bot'
+
+# This allos capybara to perform the login_as action
+include Warden::Test::Helpers
+Warden.test_mode!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -59,12 +67,22 @@ RSpec.configure do |config|
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
+  
+  # Required driver for capybara
+  config.before(:each, type: :system) do
+    driven_by :selenium_chrome_headless
+  end
+  
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  Shoulda::Matchers.configure do |config|
-    config.integrate do |with|
-      with.test_framework :rspec
-      with.library :rails
-    end
+
+  # Rspec devise configuration
+  config.include Devise::Test::ControllerHelpers, type: :controller
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
   end
 end
