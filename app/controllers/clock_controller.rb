@@ -10,7 +10,7 @@ class ClockController < ApplicationController
   end
 
   def timezones
-    @timezones = user_signed_in? ? WeatherSetter.new(all_timezones[1..5]).call : all_timezones
+    @timezones = user_signed_in? ? WeatherSetter.new(all_timezones[0..5]).call : all_timezones
   end
 
   # def show
@@ -37,7 +37,7 @@ class ClockController < ApplicationController
       redirect_to clock_index_path
     else
       flash[:danger] = "Please check the timezone"
-      render :new
+      redirect_to all_timezones_path
     end
   end
 
