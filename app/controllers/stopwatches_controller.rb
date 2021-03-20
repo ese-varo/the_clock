@@ -20,7 +20,7 @@ class StopwatchesController < ApplicationController
       render json: @stopwatch
     else
       shows_errors(@stopwatch.errors)
-      render :new
+      redirect_to user_stopwatches_path(current_user)
     end
   end
 
@@ -31,7 +31,7 @@ class StopwatchesController < ApplicationController
       @stopwatches = current_user.stopwatches
     else
       shows_errors(@lap.errors)
-      render :new
+      redirect_to user_stopwatches_path(current_user)
     end
   end
 
@@ -41,9 +41,6 @@ class StopwatchesController < ApplicationController
     if @stopwatch.valid?
       flash[:success] = 'Stopwatch deleted successfully'
       redirect_to user_stopwatches_path(current_user)
-    else 
-      shows_errors(@stopwatch.errors)
-      render :new
     end
   end
 

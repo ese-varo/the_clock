@@ -10,7 +10,7 @@ class AlarmsController < ApplicationController
   def create
     @alarm = current_user.alarms.create(alarm_params)
     if @alarm.valid?
-      hours, minutes = params[:alarm][:time].split(':')
+      hours, minutes = alarm_params[:time].split(':')
       alarm_params[:days].each do |day|
         new_time = DateTime.parse(day).change(hour: hours.to_i, min: minutes.to_i, offset: '-0700')
         AlarmNotificationJob.set(wait_until: new_time).perform_later(current_user, @alarm)
@@ -44,9 +44,6 @@ class AlarmsController < ApplicationController
     if @alarm.destroy
       flash[:success] = 'Alarm deleted successfully'
       redirect_to alarms_path
-    else 
-      shows_errors(@alarm.errors)
-      render :new
     end
   end
   
