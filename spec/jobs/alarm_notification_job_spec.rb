@@ -11,7 +11,6 @@ RSpec.describe AlarmNotificationJob, type: :job do
       alarm = create(:alarm)
       allow(AlarmMailer).to receive_message_chain(:alert_alarm_email, :deliver_now)
       described_class.new.perform(user, alarm)
-      AlarmMailer.alert_alarm_email
       expect(AlarmMailer).to have_received(:alert_alarm_email)
     end
   end

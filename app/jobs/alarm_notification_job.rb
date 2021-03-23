@@ -3,6 +3,6 @@ class AlarmNotificationJob < ApplicationJob
   queue_as :alert_alarm
 
   def perform(*args)
-    AlarmMailer.with(user: args[0], alarm: args[1]).alert_alarm_email.deliver_now
+    AlarmMailer.alert_alarm_email(user: args[0], alarm: args[1]).deliver_now
   end
 end

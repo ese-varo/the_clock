@@ -1,15 +1,15 @@
 class AlarmMailer < ApplicationMailer
   default from: 'notifications@example.com'
 
-  def alert_alarm_email
-    @user = params[:user]
-    @alarm = params[:alarm]
-    mail(to: @user.email, subject: 'A new alarm registered')
+  def alert_alarm_email(user, alarm)
+    @user = user
+    @alarm = alarm
+    mail to: @user.email
   end
   
-  def summary_email(summary)
-    @user = params[:user]
-    @summary = ActiveSupport::JSON.decode(summary)
-    mail(to: @user.email, subject: 'This is the summary of the day')
+  def summary_email(user, summary)
+    @user = user
+    @summary = summary 
+    mail to: @user.email
   end
 end

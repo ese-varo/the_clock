@@ -4,7 +4,7 @@ class SummaryNotificationJob < ApplicationJob
 
   def perform(user)
     @user = user 
-    AlarmMailer.with(user: @user).summary_email(summary.to_json).deliver_now
+    AlarmMailer.summary_email(user, summary).deliver_now
     reschedule_job(user)
   end
 
