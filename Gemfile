@@ -39,8 +39,6 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails'
   gem "rspec-rails", "~> 4.1.0"
-  gem 'database_cleaner'
-  gem 'rexml'
 end
 
 group :development do
@@ -69,6 +67,8 @@ group :test do
   gem 'simplecov', require: false, group: :test
   gem 'shoulda-matchers', '~> 4.0'
   gem 'rails-controller-testing'
+  gem 'database_cleaner'
+  gem 'rexml'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
