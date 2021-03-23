@@ -42,10 +42,6 @@ RSpec.describe "Alarms", type: :request do
   end
 
   describe 'POST #create' do
-    before :each do
-      @alarm = create(:alarm, user: user)
-    end
-
     context 'with valid attributes' do
       it "saves the alarm in the database" do
         login_as(user) 
@@ -79,7 +75,7 @@ RSpec.describe "Alarms", type: :request do
 
   describe 'PATCH #update' do
     before :each do 
-      @alarm = create(:alarm, user: user)
+      @alarm = create(:alarm, user: user, days: ['Tuesday'])
     end
     context 'with valid attributes' do
       it "locates the requested @contact" do 
@@ -109,7 +105,7 @@ RSpec.describe "Alarms", type: :request do
         patch alarm_path id: @alarm, params: {alarm: attributes_for(:alarm, label: 'NewTime', time: nil, days: [])}
         @alarm.reload
         expect(@alarm.label).not_to eq('NewTime')
-        expect(@alarm.days).to eq(['Monday', 'Wednesday', 'Friday'])
+        expect(@alarm.days).to eq(['Tuesday'])
       end
 
       it "redirects to new template" do
