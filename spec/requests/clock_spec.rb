@@ -123,21 +123,6 @@ RSpec.describe 'Clock', type: :request do
         expect(response).to redirect_to clock_index_path
       end
     end
-
-    context 'with invalid attributes' do
-      it "does not update the user timezone" do
-        login_as(@user)
-        patch clock_path id: @user.id, params: {timezone: nil}
-        @user.reload
-        expect(@user.timezone).not_to eq(name)
-      end
-
-      it "redirects to new template" do
-        login_as(user)
-        patch clock_path id: @user.id, params: {timezone: nil}
-        expect(response).to redirect_to clock_index_path
-      end
-    end
   end
 
   describe 'DELETE #destroy' do

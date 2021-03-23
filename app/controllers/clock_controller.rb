@@ -34,12 +34,10 @@ class ClockController < ApplicationController
   end
 
   def update
-    current_user.timezone = params[:timezone]
-    if current_user.save
-      redirect_to clock_index_path
-    else 
-      render :new
-    end
+    # current_user.timezone = params[:timezone]
+    current_user.update({timezone: params[:timezone]})
+    flash[:success] = "User timezone save"
+    redirect_to clock_index_path
   end
   
   def destroy
