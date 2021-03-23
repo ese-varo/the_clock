@@ -17,19 +17,19 @@ RSpec.describe Alarm, type: :model do
     it "is invalid without a label" do
       alarm = build(:alarm, label: nil)
       alarm.valid?
-      expect(alarm.errors[:label]).not_to include(["can't be blank"])
+      expect(alarm.errors[:label]).to include("can't be blank")
     end
     
     it "is invalid without a time declared" do
       alarm = build(:alarm, time: nil)
       alarm.valid?
-      expect(alarm.errors[:time]).not_to include(["can't be blank"])
+      expect(alarm.errors[:time]).to include("can't be blank")
     end
     
     it "is invalid without a days declared" do
       alarm = build(:alarm, days: nil)
       alarm.valid?
-      expect(alarm.errors[:days]).not_to include(["can't be blank"])
+      expect(alarm.errors[:days]).to include("can't be blank")
     end
     
     it "is invalid if the user does not exist" do

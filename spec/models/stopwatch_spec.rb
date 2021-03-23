@@ -19,7 +19,7 @@ RSpec.describe Stopwatch, type: :model do
     it "is invalid without a label" do
       stopwatch = build(:stopwatch, label: nil)
       stopwatch.valid?
-      expect(stopwatch.errors[:label]).not_to include(["can't be blank"])
+      expect(stopwatch.errors[:label]).to include("can't be blank")
     end
     
     it "is invalid if the user does not exist" do

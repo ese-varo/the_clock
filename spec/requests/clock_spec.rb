@@ -10,20 +10,18 @@ RSpec.describe 'Clock', type: :request do
       user: user
     )
   end
-  # let(:valid_session) { {} }
 
   describe "GET #main as a guess user" do
     it "exists and responds" do
       get root_path
       expect(response.status).to eq(200)
-      # expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET #index" do
     it "exists and responds" do
       login_as(user)
-      get clock_index_path # session: valid_session
+      get clock_index_path 
       expect(response).to have_http_status(200)
     end
   end
@@ -39,7 +37,7 @@ RSpec.describe 'Clock', type: :request do
     context "As a logged in user" do
       it "response with all timezones with weather" do
         login_as(user)
-        get all_timezones_path # session: valid_session
+        get all_timezones_path
         expect(assigns(:timezones).first).to eq (WeatherSetter.new([ActiveSupport::TimeZone.all.first]).call).first
       end
     end

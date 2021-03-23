@@ -18,7 +18,7 @@ RSpec.describe Timezone, type: :model do
     it "is invalid without a name" do
       timezone = build(:timezone, name: nil)
       timezone.valid?
-      expect(timezone.errors[:name]).not_to include(["can't be blank"])
+      expect(timezone.errors[:name]).to include("can't be blank")
     end
     
     it "is invalid if the user does not exist" do
