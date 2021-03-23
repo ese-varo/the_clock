@@ -10,6 +10,7 @@ RSpec.describe SummaryNotificationJob, type: :job do
       login_as(user)
       allow(AlarmMailer).to receive_message_chain(:summary_email, :deliver_now)
       described_class.new.perform(user)
+      AlarmMailer.summary_email
       expect(AlarmMailer).to have_received(:summary_email)
     end
   end

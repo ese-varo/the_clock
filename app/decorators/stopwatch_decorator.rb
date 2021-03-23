@@ -1,9 +1,9 @@
 class StopwatchDecorator < SimpleDelegator
   def display_lap_time
-    "#{sprintf("%.2d", (time % (1000 * 60 * 60)) / (1000 * 60))}:#{sprintf("%.2d", (time % (1000 * 60)) / 1000)}"
+    Time.at(time).utc.strftime("%H:%M:%S")
   end
 
   def display_lap_difference
-    "#{sprintf("%.2d", (difference % (1000 * 60 * 60)) / (1000 * 60))}:#{sprintf("%.2d", (difference % (1000 * 60)) / 1000)}"
+    Time.at(difference).utc.strftime("%H:%M:%S")
   end
 end

@@ -13,22 +13,10 @@ class ClockController < ApplicationController
     @timezones = user_signed_in? ? WeatherSetter.new(all_timezones[0..5]).call : all_timezones
   end
 
-  # def show
-  #   @timezone = get_new_support_timezone(params[:id])
-  #   @weather = next_forecast_days(@timezone.name)
-  # end
-
   def show
-    @timezone = ActiveSupport::TimeZone.new(params[:id])
-    @weather = []
-    weather_days = forecast_weather(@timezone.name)
-    days = weather_days["list"].length/5
-    5.times { |position| @weather.push(weather_days["list"][(position*days)+2]) }
+    @timezone = get_new_support_timezone(params[:id])
+    @weather = next_forecast_days(@timezone.name)
   end
-
-  # def new
-  #   @timezone = Timezone.new
-  # end
 
   def create
     @timezone = current_user.timezones.new(timezone_params)
@@ -86,11 +74,7 @@ class ClockController < ApplicationController
   def current_weather(timezone_name)
     CurrentWeather.call(timezone_name)
   end
-  
-  def forecast_weather(timezone_name)
-    ForecastWeather.call(timezone_name)
-  end
-  
+   
   def next_forecast_days(timezone_name)
     NextForecastDays.call(timezone_name)
   end

@@ -2,33 +2,31 @@ import Rails from "@rails/ujs"
 const startBtn = document.getElementById("start");
 const resetBtn = document.getElementById("reset");
 const recordBtn = document.getElementById("record");
+const hoursLabel = document.getElementById("hours");
 const minutesLabel = document.getElementById("minutes");
 const secondsLabel = document.getElementById("seconds");
 const listRecords = document.getElementById("records");
 const labelInput = document.querySelector('input[name="label"]');
 const userId = recordBtn.dataset.userId;
-let startTime;
-let updatedTime;
+let total_time_seconds = 0;
 let interval;
-let difference;
-let current_time = 0;
-let previous_time = 0;
+let difference = 0;
 let saved_time = 0;
+let previous_time = 0;
 let paused = false;
 let running = false;
 let records = [];
 let stopwatch_id = '';
 
 function startTimer() {
-  startTime = new Date().getTime();
-  interval = setInterval(showTime, 1);
+  interval = setInterval(showTime, 1000);
   running = true;
   paused = false;
 }
 
 function stopTimer() {
   clearInterval(interval);
-  saved_time = current_time;
+  saved_time = total_time_seconds;
   paused = true;
   running = false;
   startBtn.innerText = 'Start';
@@ -36,7 +34,6 @@ function stopTimer() {
 
 startBtn.addEventListener('click', () => {
   if (!running) {
-          console.log("Start timer");
           startTimer();
           startBtn.innerText = 'Pause';
   } else {
@@ -46,11 +43,12 @@ startBtn.addEventListener('click', () => {
 
 
 resetBtn.addEventListener('click', () => {
-  console.log("Reset Time");
   clearInterval(interval);
-  current_time = 0;
+  total_time_seconds = 0;
   difference = 0;
   previous_time = 0;
+  saved_time = 0;
+  hoursLabel.innerText = "00";
   minutesLabel.innerText = "00";
   secondsLabel.innerText = "00";
   records = [];
@@ -66,21 +64,20 @@ recordBtn.addEventListener('click', () => {
   } else if(!running) {
     alert("No time running");
   }else {
-    difference = current_time - previous_time;
+    difference = total_time_seconds - previous_time;
     if(previous_time === 0) {
       saveRecordOfStopwatch();
-    } 
-    else {
+    } else {
       saveLapOfStopwatch();
     }
-    previous_time = current_time;
+    previous_time = total_time_seconds;
   }
 });
 
 function saveRecordOfStopwatch() {
   fetch(`/users/${userId}/stopwatches`, {
     method: 'POST',
-    body: JSON.stringify({label: labelInput.value, time: current_time, difference: difference}),
+    body: JSON.stringify({label: labelInput.value, time: total_time_seconds, difference: difference}),
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': Rails.csrfToken()
@@ -93,7 +90,7 @@ function saveRecordOfStopwatch() {
 function saveLapOfStopwatch() { 
   fetch(`/users/${userId}/stopwatches/${stopwatch_id}`, {
     method: 'PATCH',
-    body: JSON.stringify({time: current_time, difference: difference}),
+    body: JSON.stringify({time: total_time_seconds, difference: difference}),
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': Rails.csrfToken()
@@ -102,14 +99,11 @@ function saveLapOfStopwatch() {
 }
 
 function showTime() {
-  updatedTime = new Date().getTime();
-  if (saved_time) {
-    current_time = (updatedTime - startTime) + saved_time; 
-  } else {
-    current_time = updatedTime - startTime;
-  }
-  let minutes = Math.floor((current_time % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((current_time % (1000 * 60)) / 1000);
+  total_time_seconds += 1;
+  let hours = Math.floor(total_time_seconds / 3600);
+  let minutes = Math.floor(total_time_seconds / 60);
+  let seconds = Math.floor(total_time_seconds % 60);
+  hoursLabel.innerText = hours.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
   minutesLabel.innerText = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
   secondsLabel.innerText = seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
 }
