@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "User sign_up sign_in", type: :feature do
   let(:user) { build(:user) } 
+
   scenario 'visit root page as a guess user' do
     visit root_path
 

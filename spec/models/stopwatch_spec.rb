@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Stopwatch, type: :model do
-  let(:user) do 
-    create(:user)
-  end
+  let(:user) { create(:user) }
   
   describe 'associations' do
     it { should belong_to(:user) }

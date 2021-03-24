@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature "Stopwatches", type: :feature, js: true do
   let!(:user) { create(:user) }
   let!(:stopwatch) { attributes_for(:stopwatch) }
+
   scenario 'create a new stopwatch with 3 laps', js: true do
     sign_in user
 

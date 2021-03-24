@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SummaryNotificationJob, type: :job do
-  let(:user) do
-    create(:user)
-  end
+  let(:user) { create(:user) }
 
   describe "#perfom" do
     it "calls on the AlarmMailer#summary_email" do

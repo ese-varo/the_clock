@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Alarms", type: :request do
-  let(:user) do 
-    create(:user)
-  end
+  let(:user) { create(:user) }
   describe "GET #index" do
     it "exists and responds" do
       login_as(user)
@@ -25,8 +23,10 @@ RSpec.describe "Alarms", type: :request do
   end
   
   describe 'GET #edit' do
-    it "assigns a requested to @timezone" do
+    before :each do 
       login_as(user)
+    end
+    it "assigns a requested to @timezone" do
       alarm = create(:alarm, user: user)
       get edit_alarm_path id: alarm
       expect(assigns(:alarm)).to eq alarm
@@ -34,7 +34,6 @@ RSpec.describe "Alarms", type: :request do
     end
 
     it "renders the :edit template" do
-      login_as(user)
       alarm = create(:alarm)
       get edit_alarm_path id: alarm
       expect(response).to render_template :edit
@@ -42,16 +41,18 @@ RSpec.describe "Alarms", type: :request do
   end
 
   describe 'POST #create' do
+      before :each do 
+        login_as(user)
+      end
+
     context 'with valid attributes' do
       it "saves the alarm in the database" do
-        login_as(user) 
         expect{
           post alarms_path, params: {alarm: attributes_for(:alarm)}
         }.to change(Alarm, :count).by(1)
       end
 
       it "redirects to alarm#index" do
-        login_as(user) 
         post alarms_path, params: {alarm: attributes_for(:alarm)}
         expect(response).to redirect_to alarms_path
       end
@@ -59,14 +60,12 @@ RSpec.describe "Alarms", type: :request do
 
     context 'with invalid attributes' do 
       it "does not save the alarm in the databse" do 
-        login_as(user)
         expect{
           post alarms_path, params: {alarm: attributes_for(:alarm, days:nil)}
         }.not_to change(Alarm, :count)
       end
 
       it "re-renders the :new template" do
-        login_as(user)
         post alarms_path, params: {alarm: attributes_for(:alarm, days:nil)}
         expect(response).to render_template :new
       end
@@ -76,16 +75,15 @@ RSpec.describe "Alarms", type: :request do
   describe 'PATCH #update' do
     before :each do 
       @alarm = create(:alarm, user: user, days: ['Tuesday'])
+      login_as(user)
     end
     context 'with valid attributes' do
       it "locates the requested @contact" do 
-        login_as(user)
         patch alarm_path id: @alarm, params: {alarm: attributes_for(:alarm)}
         expect(assigns(:alarm)).to eq(@alarm)
       end
 
       it "updates the alarm in the database" do
-        login_as(@user)
         patch alarm_path id: @alarm, params: {alarm: attributes_for(:alarm, label: 'TestTime', days: ['Monday']) }
         @alarm.reload
         expect(@alarm.label).to eq('TestTime')
@@ -93,7 +91,6 @@ RSpec.describe "Alarms", type: :request do
       end
 
       it "redirects to the alarm#index" do
-        login_as(user)
         patch alarm_path id: @alarm, params: {alarm: attributes_for(:alarm)}
         expect(response).to redirect_to alarms_path
       end
@@ -101,7 +98,6 @@ RSpec.describe "Alarms", type: :request do
 
     context 'with invalid attributes' do
       it "does not update the alarm" do
-        login_as(user)
         patch alarm_path id: @alarm, params: {alarm: attributes_for(:alarm, label: 'NewTime', time: nil, days: [])}
         @alarm.reload
         expect(@alarm.label).not_to eq('NewTime')
@@ -109,7 +105,6 @@ RSpec.describe "Alarms", type: :request do
       end
 
       it "redirects to new template" do
-        login_as(user)
         patch alarm_path id: @alarm, params: {alarm: attributes_for(:alarm, label: nil, time: nil)}
         expect(response).to render_template :new
       end
@@ -119,6 +114,7 @@ RSpec.describe "Alarms", type: :request do
   describe 'DELETE #destroy' do
     before :each do
       @alarm = create(:alarm)
+      login_as(user)
     end
 
     it "deletes the timezone from the database" do

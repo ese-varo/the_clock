@@ -1,12 +1,8 @@
 require "rails_helper"
 
 RSpec.describe AlarmMailer, type: :mailer do
-  let(:user) do
-    create(:user)
-  end
-  let(:alarm) do
-    create(:alarm, user: user)
-  end
+  let(:user) { create(:user) }
+  let(:alarm) { create(:alarm, user: user) }
   describe "alert alarm mailer" do
     context "headers" do
       it "renders the subject" do

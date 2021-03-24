@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Select user timezone", type: :feature do
   let!(:user) { create(:user, timezone: 'Alaska') }
+
   scenario 'visit clock page to choose one timezone to display' do
     sign_in user
 

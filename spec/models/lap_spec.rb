@@ -1,16 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Lap, type: :model do
-  let(:user) do
-    create(:user)
-  end
+  let(:user) { create(:user) }
   describe 'associations' do
     it { should belong_to(:stopwatch) }
   end
 
   describe 'validations' do
     it "is valid with a time, difference and stopwatch_id" do
-      login_as(user)
       stopwatch = create(:stopwatch, user: user)
       lap = create(:lap, stopwatch: stopwatch) 
       expect(lap).to be_valid

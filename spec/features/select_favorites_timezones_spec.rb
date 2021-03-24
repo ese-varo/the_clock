@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Select favorites timezones", type: :feature do 
   let!(:user) { create(:user, timezone: "Chihuahua") }
+  
   scenario 'visit favorites timezones page to choose two favorites timezones' do
     sign_in user
 

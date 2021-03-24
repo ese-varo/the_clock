@@ -2,14 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Clock', type: :request do
   let(:name) { "Tijuana" }
-  let(:user) do 
-    create(:user)
-  end
-  let(:timezone) do
-    create(:timezone,
-      user: user
-    )
-  end
+  let(:user) { create(:user) }
+  let(:timezone) { create(:timezone, user: user) }
 
   describe "GET #main as a guess user" do
     it "exists and responds" do
@@ -68,16 +62,17 @@ RSpec.describe 'Clock', type: :request do
   end
 
   describe 'POST #create' do
+    before :each do 
+      login_as(user) 
+    end
     context 'with valid attributes' do
       it "saves the favorite timezone in the database" do
-        login_as(user) 
         expect{
           post clock_index_path, params: {name: name}
         }.to change(Timezone, :count).by(1)
       end
 
       it "redirects to clock#index" do
-        login_as(user) 
         post clock_index_path, params: {name: name}
         expect(response).to redirect_to clock_index_path
       end
@@ -85,14 +80,12 @@ RSpec.describe 'Clock', type: :request do
 
     context 'with invalid attributes' do 
       it "does not save the favorite timezone in the databse" do 
-        login_as(user)
         expect{
           post clock_index_path, params: {name: nil}
         }.not_to change(Timezone, :count)
       end
 
       it "re-renders the all_timezones template" do
-        login_as(user)
         post clock_index_path, params: {name: nil}
         expect(response).to redirect_to all_timezones_path
       end
@@ -102,23 +95,21 @@ RSpec.describe 'Clock', type: :request do
   describe 'PATCH #update' do
     before :each do 
       @user = create(:user, timezone: name)
+      login_as(@user)
     end
     context 'with valid attributes' do
       it "locates the requested @contact" do 
-        login_as(@user)
         patch clock_path id: @user.id, params: {timezone: name}
         expect(assigns(:current_user)).to eq(@user)
       end
 
       it "updates the user timezone in the database" do
-        login_as(@user)
         patch clock_path id: @user.id, params: {timezone: timezone.name}
         @user.reload
         expect(@user.timezone).to eq(timezone.name)
       end
 
       it "redirects to the clock#index" do
-        login_as(user)
         patch clock_path id: @user.id, params: {timezone: name}
         expect(response).to redirect_to clock_index_path
       end
@@ -128,6 +119,7 @@ RSpec.describe 'Clock', type: :request do
   describe 'DELETE #destroy' do
     before :each do
       @timezone = create(:timezone)
+      login_as(user)
     end
 
     it "deletes the timezone from the database" do
