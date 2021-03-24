@@ -124,4 +124,13 @@ RSpec.describe "Stopwatches", type: :request do
       expect(response).to redirect_to user_stopwatches_path(user)
     end
   end
+
+  describe 'Decorators' do
+    it "evaluate stopwatch decorator to display lap time and difference time" do
+      lap = create(:lap, time: 15, difference: 10)
+      expect(StopwatchDecorator.new(lap).display_lap_time).to eq "00:00:15"
+      expect(StopwatchDecorator.new(lap).display_lap_difference).to eq "00:00:10"
+    end
+  end
+
 end

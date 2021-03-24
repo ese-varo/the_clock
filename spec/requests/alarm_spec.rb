@@ -133,5 +133,11 @@ RSpec.describe "Alarms", type: :request do
     end
   end
 
+  describe 'Decorators' do
+    it "evaluate alarm decorator to display time" do
+      alarm = create(:alarm, time: '10:30')
+      expect(AlarmDecorator.new(alarm).display_time).to eq "10:30AM"
+    end
+  end
 end
 
