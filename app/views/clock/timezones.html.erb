@@ -6,7 +6,7 @@
         <%= render 'timezone', timezone: timezone %>  
         <% if user_signed_in? %>
           <%= render 'weather', weather: timezone.weather, timezone_name: timezone.name %>  
-          <%= button_to 'Save as favorite', clock_index_path, method: :post, params: { name: timezone.name}, class: "btn btn-primary btn-sm mt-2" %>
+          <%= button_to 'Save as favorite', clock_index_path, method: :post, params: { name: timezone.name}, class: "btn btn-primary btn-sm mt-2", id: timezone.name.gsub(/\s/, '_')%>
         <% end %>
       </div>
     </div>
