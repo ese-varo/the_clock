@@ -16,8 +16,6 @@ class IconWeather < ApplicationService
   private
    def request(url)
     HTTParty.get(url.gsub(' ', '%20')) 
-    rescue ActiveRecord::RecordNotFound => e
-      flash[:danger] = 'There is no information for the resource'
    end
 
 end

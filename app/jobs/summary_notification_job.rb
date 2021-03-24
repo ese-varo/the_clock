@@ -3,15 +3,14 @@ class SummaryNotificationJob < ApplicationJob
   queue_as :default
 
   def perform(user)
-    reschedule_job(user)
     @user = user 
-    AlarmMailer.with(user: @user).summary_email(summary.to_json).deliver_later
+    AlarmMailer.summary_email(user, summary).deliver_now
+    reschedule_job(user)
   end
 
   private
   def reschedule_job(user)
-    # self.class.set(wait: 24.hours).perform_later(user)
-    self.class.set(wait: 25.seconds).perform_later(user)
+    self.class.set(wait: 24.hours).perform_later(user)
   end
 
   def summary

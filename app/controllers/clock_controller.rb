@@ -1,7 +1,6 @@
 class ClockController < ApplicationController
   def main
     current_timezone
-    @current_weather = current_weather(@current_timezone.name)
   end
 
   def index
@@ -11,24 +10,12 @@ class ClockController < ApplicationController
   end
 
   def timezones
-    @timezones = user_signed_in? ? WeatherSetter.new(all_timezones[1..5]).call : all_timezones
+    @timezones = user_signed_in? ? WeatherSetter.new(all_timezones[0..5]).call : all_timezones
   end
 
   def show
     @timezone = get_new_support_timezone(params[:id])
     @weather = next_forecast_days(@timezone.name)
-  end
-
-  def show
-    @timezone = ActiveSupport::TimeZone.new(params[:id])
-    @weather = []
-    weather_days = forecast_weather(@timezone.name)
-    days = weather_days["list"].length/5
-    5.times { |position| @weather.push(weather_days["list"][(position*days)+2]) }
-  end
-
-  def new
-    @timezone = Timezone.new
   end
 
   def create
@@ -38,7 +25,7 @@ class ClockController < ApplicationController
       redirect_to clock_index_path
     else
       flash[:danger] = "Please check the timezone"
-      render :new
+      redirect_to all_timezones_path
     end
   end
 
@@ -47,12 +34,10 @@ class ClockController < ApplicationController
   end
 
   def update
-    current_user.timezone = params[:timezone]
-    if current_user.save
-      redirect_to clock_index_path
-    else 
-      render :new
-    end
+    # current_user.timezone = params[:timezone]
+    current_user.update({timezone: params[:timezone]})
+    flash[:success] = "User timezone save"
+    redirect_to clock_index_path
   end
   
   def destroy
@@ -87,11 +72,7 @@ class ClockController < ApplicationController
   def current_weather(timezone_name)
     CurrentWeather.call(timezone_name)
   end
-  
-  def forecast_weather(timezone_name)
-    ForecastWeather.call(timezone_name)
-  end
-  
+   
   def next_forecast_days(timezone_name)
     NextForecastDays.call(timezone_name)
   end
