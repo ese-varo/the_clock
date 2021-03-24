@@ -3,15 +3,15 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
+# Include all files on support directory
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 require 'spec_helper'
 require 'rspec/rails'
 require 'devise'
-require_relative 'support/controller_macros'
 require 'capybara/rails'
-require_relative 'support/factory_bot'
 
-# This allos capybara to perform the login_as action
+# This allows capybara to perform the login_as action
 include Warden::Test::Helpers
 Warden.test_mode!
 
@@ -77,6 +77,9 @@ RSpec.configure do |config|
 
   # Rspec devise configuration
   config.include Devise::Test::ControllerHelpers, type: :controller
+
+  # Feature macros
+  config.include LoginMacros
 end
 
 Shoulda::Matchers.configure do |config|
