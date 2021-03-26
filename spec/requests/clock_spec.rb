@@ -52,7 +52,7 @@ RSpec.describe 'Clock', type: :request do
   describe 'GET #edit' do
     it "assigns a requested to @timezone" do
       get edit_clock_path id: name
-      expect(assigns(:timezones)).to eq ActiveSupport::TimeZone.all.map {|zone| [zone.name, zone.name]}
+      expect(assigns(:timezones)).to eq ActiveSupport::TimeZone.all
     end
 
     it "renders the :edit template" do

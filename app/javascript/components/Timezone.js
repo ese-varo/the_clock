@@ -1,3 +1,4 @@
+import Rails from "@rails/ujs"
 import React from "react"
 import PropTypes from "prop-types"
 class Timezone extends React.Component {
@@ -5,7 +6,6 @@ class Timezone extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: this.props.user.timezone}
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -16,14 +16,13 @@ class Timezone extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const token = document.querySelector('[name=csrf-token]').content
     $.ajax({
       method: 'PATCH',
       data: JSON.stringify({timezone: this.state.value}),
       url: `/clock/${this.props.user.id}/`,
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': token
+        'X-CSRF-Token': Rails.csrfToken()
       },
       credentials: 'same-origin'
     })
@@ -35,13 +34,13 @@ class Timezone extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <label className="form-label w-100">
             <h3>Select your timezone:</h3>
-            <select className="form-control mt-3" value={this.state.value} onChange={this.handleChange}>
+            <select id="timezone" className="form-control mt-3" value={this.state.value} onChange={this.handleChange}>
               {this.props.timezones.map((timezone, index) => {
                 return <option key={index} value={timezone.name}>{timezone.name}</option>
                 })
               }
             </select>
-          </label><br></br>
+          </label>
           <input type="submit" value="Save timezone" className="btn btn-primary mt-3" />
         </form>
       </div>
