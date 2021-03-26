@@ -1,5 +1,6 @@
-<%= form_with url: clock_path, method: :patch do |form| %>
-  <h3><%= form.label 'Select your timezone', class: "form-label" %></h3>
-  <%= select_tag(:timezone, options_for_select(@timezones, 2), {class: "form-control"}) %><br>
-  <%= form.submit "Save timezone", class: "btn btn-primary" %>
-<% end %>
+<%# <%= form_with url: clock_path, method: :patch do |form| %1> %>
+<%#   <h3><%= form.label 'Select your timezone', class: "form-label" %1></h3> %>
+<%#   <%= select_tag(:timezone, options_for_select(@timezones, 2), {class: "form-control"}) %1><br> %>
+<%#   <%= form.submit "Save timezone", class: "btn btn-primary" %1> %>
+<%# <% end %1> %>
+<%= react_component("Timezone", {timezones: @timezones, user: current_user}) %>

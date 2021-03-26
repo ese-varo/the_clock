@@ -30,11 +30,10 @@ class ClockController < ApplicationController
   end
 
   def edit
-    @timezones = all_timezones.map {|zone| [zone.name, zone.name]}
+    @timezones = all_timezones
   end
 
   def update
-    # current_user.timezone = params[:timezone]
     current_user.update({timezone: params[:timezone]})
     flash[:success] = "User timezone save"
     redirect_to clock_index_path
