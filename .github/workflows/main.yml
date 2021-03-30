@@ -28,6 +28,10 @@ jobs:
           ruby-version: 3.0.0
       - name: Install sqlite3
         run: sudo apt-get install libsqlite3-dev
+      - name: Install yarn
+        run: |
+          sudo apt install yarn
+          yarn install
       - name: Install dependencies
         run: 
           bundler install
