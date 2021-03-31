@@ -4,7 +4,7 @@ RSpec.feature "Stopwatches", type: :feature, js: true do
   let!(:user) { create(:user) }
   let!(:stopwatch) { attributes_for(:stopwatch) }
 
-  scenario 'create a new stopwatch with 3 laps', js: true do
+  scenario 'create a new stopwatch with 3 laps' do
     sign_in user
 
     click_link 'My stopwatches'
@@ -27,7 +27,7 @@ RSpec.feature "Stopwatches", type: :feature, js: true do
     expect(page).to have_content "Label: #{stopwatch[:label]}"
   end
 
-  scenario 'delete a stopwatch created', js: true do
+  scenario 'delete a stopwatch created' do
     sign_in user
 
     click_link 'My stopwatches'
@@ -46,7 +46,7 @@ RSpec.feature "Stopwatches", type: :feature, js: true do
     expect(page).not_to have_content "Label: #{stopwatch[:label]}"
   end
 
-  scenario 'show records for a stopwatch created', js: true do
+  scenario 'show records for a stopwatch created' do
     sign_in user
 
     click_link 'My stopwatches'

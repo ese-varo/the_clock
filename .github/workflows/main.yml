@@ -45,13 +45,13 @@ jobs:
         env:
           OPEN_WEATHER_KEY: 866b5463b979e3ffb0a4f566137f898f
         run: bundler exec rspec
-      - name: Simplecov Report
-        uses: aki77/simplecov-report-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload coverage results
         uses: actions/upload-artifact@v2
         if: always()
         with:
           name: coverage-report
           path: coverage 
+      - name: Simplecov Report
+        uses: aki77/simplecov-report-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
