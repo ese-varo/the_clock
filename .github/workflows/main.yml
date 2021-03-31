@@ -44,8 +44,9 @@ jobs:
           OPEN_WEATHER_KEY: 866b5463b979e3ffb0a4f566137f898f
         run: bundler exec rspec
       - name: Upload coverage results
-        uses: actions/upload-artifact@v2
-        if: always()
+        uses: devmasx/coverage-check-action@v1.2.0
         with:
-          name: coverage-report
-          path: coverage
+          type: simplecov
+          result_path: coverage/.last_run.json
+          min_coverage: 90
+          token: ${{ github.token }}
