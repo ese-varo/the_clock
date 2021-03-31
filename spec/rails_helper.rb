@@ -20,8 +20,17 @@ Capybara.register_driver :selenium_chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
 
-Capybara.javascript_driver = :selenium_chrome
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w[headless disable-gpu no-sandbox disable-dev-shm-usage] }
+  )
 
+  Capybara::Selenium::Driver.new app,
+                                 browser: :chrome,
+                                 desired_capabilities: capabilities
+end
+
+Capybara.javascript_driver = :selenium_chrome
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
