@@ -1,0 +1,51 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Rails tests CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  rspec-test:
+    name: RSpec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+      - name: Install sqlite3
+        run: sudo apt-get install libsqlite3-dev
+      - name: Install yarn
+        run: |
+          sudo apt install yarn
+          yarn install
+      - name: Install dependencies
+        run: 
+          bundler install
+      - name: Create database
+        run: |
+          bundler exec rails db:create RAILS_ENV=test
+          bundler exec rails db:migrate RAILS_ENV=test
+      - name: Run tests
+        env:
+          OPEN_WEATHER_KEY: 866b5463b979e3ffb0a4f566137f898f
+        run: bundler exec rspec
+      - name: Upload coverage results
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage
