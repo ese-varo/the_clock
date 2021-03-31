@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Select user timezone", type: :feature do
+RSpec.feature "Select user timezone", type: :feature, js: true do
   let!(:user) { create(:user, timezone: 'Alaska') }
 
   scenario 'visit clock page to choose one timezone to display', js: true do

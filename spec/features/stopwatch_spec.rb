@@ -1,11 +1,9 @@
 require 'rails_helper'
 
-RSpec.feature "Stopwatches", type: :feature do
+RSpec.feature "Stopwatches", type: :feature, js: true do
   let!(:user) { create(:user) }
   let!(:stopwatch) { attributes_for(:stopwatch) }
-  before(:each) do
-    Capybara.current_driver = :selenium
-  end
+
   scenario 'create a new stopwatch with 3 laps' do
     sign_in user
 
