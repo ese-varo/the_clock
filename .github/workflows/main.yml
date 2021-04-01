@@ -43,7 +43,7 @@ jobs:
           bundler exec rails db:migrate RAILS_ENV=test
       - name: Run tests
         env:
-          OPEN_WEATHER_KEY: 866b5463b979e3ffb0a4f566137f898f
+          OPEN_WEATHER_KEY: ${{ secrets.OPEN_WEATHER_KEY }}
         run: bundler exec rspec
       - name: Upload coverage results
         uses: actions/upload-artifact@v2
