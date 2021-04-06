@@ -10,7 +10,9 @@ class AlarmsController < ApplicationController
   def create
     @alarm = current_user.alarms.create(alarm_params)
     if @alarm.valid?
-      hours, minutes = alarm_params[:time].split(':')
+      splitted_time =  alarm_params[:time].split(':')
+      hours = splitted_time[0]
+      minutes = splitted_time[1]
       alarm_params[:days].each do |day|
         new_time = DateTime.parse(day).change(hour: hours.to_i, min: minutes.to_i, offset: '-0700')
         AlarmNotificationJob.set(wait_until: new_time).perform_later(current_user, @alarm)

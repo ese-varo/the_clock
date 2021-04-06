@@ -8,15 +8,15 @@ const secondsLabel = document.getElementById("seconds");
 const listRecords = document.getElementById("records");
 const labelInput = document.querySelector('input[name="label"]');
 const userId = recordBtn.dataset.userId;
-let total_time_seconds = 0;
+let totalTimeSeconds = 0;
 let interval;
 let difference = 0;
-let saved_time = 0;
+let savedTime = 0;
 let previous_time = 0;
 let paused = false;
 let running = false;
 let records = [];
-let stopwatch_id = '';
+let stopwatchId = '';
 
 function startTimer() {
   interval = setInterval(showTime, 1000);
@@ -26,7 +26,7 @@ function startTimer() {
 
 function stopTimer() {
   clearInterval(interval);
-  saved_time = total_time_seconds;
+  savedTime = totalTimeSeconds;
   paused = true;
   running = false;
   startBtn.innerText = 'Start';
@@ -44,10 +44,10 @@ startBtn.addEventListener('click', () => {
 
 resetBtn.addEventListener('click', () => {
   clearInterval(interval);
-  total_time_seconds = 0;
+  totalTimeSeconds = 0;
   difference = 0;
   previous_time = 0;
-  saved_time = 0;
+  savedTime = 0;
   hoursLabel.innerText = "00";
   minutesLabel.innerText = "00";
   secondsLabel.innerText = "00";
@@ -64,33 +64,33 @@ recordBtn.addEventListener('click', () => {
   } else if(!running) {
     alert("No time running");
   }else {
-    difference = total_time_seconds - previous_time;
+    difference = totalTimeSeconds - previous_time;
     if(previous_time === 0) {
       saveRecordOfStopwatch();
     } else {
       saveLapOfStopwatch();
     }
-    previous_time = total_time_seconds;
+    previous_time = totalTimeSeconds;
   }
 });
 
 function saveRecordOfStopwatch() {
   fetch(`/users/${userId}/stopwatches`, {
     method: 'POST',
-    body: JSON.stringify({label: labelInput.value, time: total_time_seconds, difference: difference}),
+    body: JSON.stringify({label: labelInput.value, time: totalTimeSeconds, difference: difference}),
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': Rails.csrfToken()
     },
     credentials: 'same-origin'
   }).then(response => response.json())
-  .then(result => stopwatch_id = result.id);
+  .then(result => stopwatchId = result.id);
 }
 
 function saveLapOfStopwatch() { 
-  fetch(`/users/${userId}/stopwatches/${stopwatch_id}`, {
+  fetch(`/users/${userId}/stopwatches/${stopwatchId}`, {
     method: 'PATCH',
-    body: JSON.stringify({time: total_time_seconds, difference: difference}),
+    body: JSON.stringify({time: totalTimeSeconds, difference: difference}),
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': Rails.csrfToken()
@@ -99,10 +99,10 @@ function saveLapOfStopwatch() {
 }
 
 function showTime() {
-  total_time_seconds += 1;
-  let hours = Math.floor(total_time_seconds / 3600);
-  let minutes = Math.floor(total_time_seconds / 60);
-  let seconds = Math.floor(total_time_seconds % 60);
+  totalTimeSeconds += 1;
+  let hours = Math.floor(totalTimeSeconds / 3600);
+  let minutes = Math.floor(totalTimeSeconds / 60);
+  let seconds = Math.floor(totalTimeSeconds % 60);
   hoursLabel.innerText = hours.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
   minutesLabel.innerText = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
   secondsLabel.innerText = seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
