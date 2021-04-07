@@ -17,11 +17,16 @@ Warden.test_mode!
 
 # Capybara configuration
 Capybara.register_driver :selenium_chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--window-size=1400,1400')
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
 Capybara.javascript_driver = :selenium_chrome
-
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -68,8 +73,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   
   # Required driver for capybara
-  config.before(:each, type: :system) do
-    driven_by :selenium_chrome_headless
+  config.before(:each, type: :system, js: true) do
+    driven_by :selenium_chrome
   end
   
   # arbitrary gems may also be filtered via:

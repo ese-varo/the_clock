@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Select user timezone", type: :feature do
+RSpec.feature "Select user timezone", type: :feature, js: true do
   let!(:user) { create(:user, timezone: 'Alaska') }
 
   scenario 'visit clock page to choose one timezone to display', js: true do
@@ -39,9 +39,8 @@ RSpec.feature "Select user timezone", type: :feature do
     sign_in user
     click_link 'My timezones'
     click_button 'See forecast'
-    today = Date.today
     expect(page).to have_content 'Alaska'
     expect(page).to have_content 'Timezone info:'
-    expect(page).to have_content today.change(day:today.day+1).strftime("%A") 
+    expect(page).to have_content (Date.today + 1.days).strftime("%A") 
   end
 end
